@@ -26,6 +26,10 @@
 	<string>$(PRODUCT_COPYRIGHT)</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Save generated images to your photo library.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Access your photo library to save generated images to the AP album.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

@@ -2,6 +2,7 @@ import 'package:ap_common_flutter_core/ap_common_flutter_core.dart';
 import 'package:ap_common_flutter_ui/src/resources/ap_colors.dart';
 import 'package:ap_common_flutter_ui/src/resources/resources.dart';
 import 'package:ap_common_flutter_ui/src/theme/course_palette_theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 export 'package:cupertino_back_gesture/cupertino_back_gesture.dart';

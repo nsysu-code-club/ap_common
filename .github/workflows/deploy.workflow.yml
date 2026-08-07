@@ -7,6 +7,9 @@ on:
     tags-ignore:
       - '*v*dev*'
 
+env:
+  flutter_version_file: '.fvmrc'
+
 jobs:
   deploy:
     name: Deploy
@@ -19,8 +22,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.38.x'
-          channel: 'stable'
+          flutter-version-file: ${{ env.flutter_version_file }}
           cache: true
 
       - name: Setup Melos

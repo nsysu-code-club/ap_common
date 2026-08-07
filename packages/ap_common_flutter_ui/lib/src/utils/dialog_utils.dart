@@ -110,6 +110,7 @@ class DialogUtils {
     final String versionName = 'v${versionInfo.code ~/ 10000}.'
         '${versionInfo.code % 1000 ~/ 100}.'
         '${versionInfo.code % 100}';
+    VersionInfo resolvedVersionInfo = versionInfo;
     String url = '';
     if (Platform.isAndroid) {
       url = 'market://details?id=${packageInfo.packageName}';
@@ -149,10 +150,11 @@ class DialogUtils {
         final String s => s,
         _ => versionInfo.content,
       };
-      versionInfo = versionInfo.copyWith(content: content);
+      resolvedVersionInfo = versionInfo.copyWith(content: content);
     }
     if (!context.mounted) return;
-    final String versionContent = '${'\n$versionName\n'}${versionInfo.content}';
+    final String versionContent =
+        '${'\n$versionName\n'}${resolvedVersionInfo.content}';
     final String updateContent = app.updateContent(arg1: appName);
     final RichText contentWidget = RichText(
       textAlign: TextAlign.center,
@@ -172,7 +174,7 @@ class DialogUtils {
       ),
     );
     if (versionDiff > 0) {
-      if (versionInfo.isForceUpdate) {
+      if (resolvedVersionInfo.isForceUpdate) {
         //ignore: use_build_context_synchronously
         if (!context.mounted) return;
         showDialog(
