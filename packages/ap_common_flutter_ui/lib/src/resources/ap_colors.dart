@@ -56,3 +56,39 @@ class ApColors {
     Colors.blueGrey,
   ];
 }
+
+/// Shared semantic colors for numeric scores and grade points.
+abstract final class ScoreColors {
+  static const Color excellent = Color(0xFF4CAF50);
+  static const Color good = Color(0xFF8BC34A);
+  static const Color average = Color(0xFF2196F3);
+  static const Color passing = Color(0xFFFF9800);
+  static const Color failing = Color(0xFFF44336);
+
+  static Color forNumeric(double score, double passingScore) {
+    if (score < passingScore) return failing;
+    if (score >= 90) return excellent;
+    if (score >= 80) return good;
+    if (score >= 70) return average;
+    return passing;
+  }
+
+  static Color forGradePoint(double gradePoint, double passingGradePoint) {
+    if (gradePoint < passingGradePoint) return failing;
+    if (gradePoint >= 4.0) return excellent;
+    if (gradePoint >= 3.3) return good;
+    if (gradePoint >= 2.7) return average;
+    return passing;
+  }
+
+  static Color forGrade(String grade, Color fallback) {
+    return switch (grade) {
+      'A+' || 'A' => excellent,
+      'A-' || 'B+' => good,
+      'B' || 'B-' => average,
+      'C+' || 'C' || 'C-' => passing,
+      'D' || 'E' || 'F' => failing,
+      _ => fallback,
+    };
+  }
+}

@@ -24,6 +24,8 @@ const double _courseHeight = 64.0;
 
 const String _kCourseInvisibleKey =
     '${ApConstants.packageName}.course_invisible_';
+const String _kCoursePreferredVisibleKey =
+    '${ApConstants.packageName}.course_preferred_visible_';
 
 const List<Color> courseColors = <Color>[
   Color(0xFF5C6BC0), // Indigo
@@ -97,6 +99,7 @@ class CourseScaffold extends StatefulWidget {
     this.semesterPickerUiConfig,
     this.enablePaletteSelector = true,
     this.onCoursePaletteChanged,
+    this.autoHideOverlappingCourses = false,
   });
 
   /// Creates a [CourseScaffold] from a [DataState<CourseData>].
@@ -140,6 +143,7 @@ class CourseScaffold extends StatefulWidget {
     this.semesterPickerUiConfig,
     this.enablePaletteSelector = true,
     this.onCoursePaletteChanged,
+    this.autoHideOverlappingCourses = false,
   })  : state = dataState.when(
           loading: () => CourseState.loading,
           loaded: (_, __) => CourseState.finish,
@@ -213,6 +217,12 @@ class CourseScaffold extends StatefulWidget {
   /// silently no-ops when the plugin isn't registered.
   final ValueChanged<CoursePaletteTheme>? onCoursePaletteChanged;
 
+  /// Whether overlapping courses should be hidden automatically.
+  ///
+  /// Defaults to `false` so [CourseScaffoldState.invisibleCourseCodes]
+  /// continues to represent courses explicitly hidden by the user.
+  final bool autoHideOverlappingCourses;
+
   @override
   CourseScaffoldState createState() => CourseScaffoldState();
 }
@@ -234,7 +244,13 @@ class CourseScaffoldState extends State<CourseScaffold> {
 
   List<String> invisibleCourseCodes = <String>[];
 
-  late Map<int, Map<int, Course>> _courseLookup;
+  late Map<int, Map<int, List<Course>>> _courseLookup;
+  late Map<String, Set<String>> _courseOverlapLookup;
+  late List<String> _courseCodesInOrder;
+
+  Set<String> _manuallyHiddenCourseCodes = <String>{};
+  Set<String> _preferredVisibleCourseCodes = <String>{};
+  Set<String> _overlapHiddenCourseCodes = <String>{};
 
   final Map<String, int> _courseColorIndexMap = <String, int>{};
   int _colorIndex = 0;
@@ -309,6 +325,9 @@ class CourseScaffoldState extends State<CourseScaffold> {
       _buildCourseLookup();
       _courseColorIndexMap.clear();
       _colorIndex = 0;
+    } else if (widget.autoHideOverlappingCourses !=
+        oldWidget.autoHideOverlappingCourses) {
+      _recomputeOverlapHiddenCourses();
     }
     fetchInvisibleCourseCodes();
     super.didUpdateWidget(oldWidget);
@@ -900,10 +919,8 @@ class CourseScaffoldState extends State<CourseScaffold> {
     final List<Widget> children = <Widget>[];
     for (int i = minIndex; i <= maxIndex; i++) {
       final Course? course = _getCourseAt(weekday, i);
-      final bool isInvisible =
-          course != null && invisibleCourseCodes.contains(course.code);
 
-      if (course == null || isInvisible) {
+      if (course == null) {
         children.add(
           _buildEmptyCell(
             colorScheme,
@@ -917,7 +934,7 @@ class CourseScaffoldState extends State<CourseScaffold> {
         int span = 1;
         if (mergeCourse ?? true) {
           while (i + span <= maxIndex &&
-              _getCourseAt(weekday, i + span) == course) {
+              _getCourseAt(weekday, i + span)?.code == course.code) {
             span++;
           }
         }
@@ -1056,19 +1073,101 @@ class CourseScaffoldState extends State<CourseScaffold> {
   }
 
   void _buildCourseLookup() {
-    _courseLookup = <int, Map<int, Course>>{};
+    _courseLookup = <int, Map<int, List<Course>>>{};
+    _courseOverlapLookup = <String, Set<String>>{};
+    _courseCodesInOrder = <String>[];
+
     for (final Course course in widget.courseData.courses) {
+      if (!_courseOverlapLookup.containsKey(course.code)) {
+        _courseOverlapLookup[course.code] = <String>{};
+        _courseCodesInOrder.add(course.code);
+      }
       for (final SectionTime time in course.times) {
-        _courseLookup.putIfAbsent(
-          time.weekday,
-          () => <int, Course>{},
-        )[time.index] = course;
+        _courseLookup
+            .putIfAbsent(
+              time.weekday,
+              () => <int, List<Course>>{},
+            )
+            .putIfAbsent(time.index, () => <Course>[])
+            .add(course);
       }
     }
+
+    for (final Map<int, List<Course>> weekday in _courseLookup.values) {
+      for (final List<Course> courses in weekday.values) {
+        for (int i = 0; i < courses.length; i++) {
+          for (int j = i + 1; j < courses.length; j++) {
+            final String firstCode = courses[i].code;
+            final String secondCode = courses[j].code;
+            if (firstCode == secondCode) continue;
+            _courseOverlapLookup[firstCode]!.add(secondCode);
+            _courseOverlapLookup[secondCode]!.add(firstCode);
+          }
+        }
+      }
+    }
+
+    _recomputeOverlapHiddenCourses();
   }
 
   Course? _getCourseAt(int weekday, int timeIndex) {
-    return _courseLookup[weekday]?[timeIndex];
+    final List<Course>? courses = _courseLookup[weekday]?[timeIndex];
+    if (courses == null) return null;
+
+    for (final Course course in courses.reversed) {
+      if (!invisibleCourseCodes.contains(course.code)) return course;
+    }
+    return null;
+  }
+
+  void _recomputeOverlapHiddenCourses() {
+    if (!widget.autoHideOverlappingCourses) {
+      _overlapHiddenCourseCodes = <String>{};
+      invisibleCourseCodes = _manuallyHiddenCourseCodes.toList();
+      return;
+    }
+
+    final Set<String> visibleCodes = _courseCodesInOrder
+        .where(
+          (String code) => !_manuallyHiddenCourseCodes.contains(code),
+        )
+        .toSet();
+    final Set<String> overlapHidden = <String>{};
+
+    for (final String preferredCode in _preferredVisibleCourseCodes) {
+      if (!visibleCodes.contains(preferredCode)) continue;
+      for (final String overlappingCode
+          in _courseOverlapLookup[preferredCode] ?? <String>{}) {
+        if (visibleCodes.remove(overlappingCode)) {
+          overlapHidden.add(overlappingCode);
+        }
+      }
+    }
+
+    while (true) {
+      String? codeToHide;
+      int highestOverlapCount = 0;
+
+      for (final String code in _courseCodesInOrder) {
+        if (!visibleCodes.contains(code)) continue;
+        final int overlapCount =
+            _courseOverlapLookup[code]!.where(visibleCodes.contains).length;
+        if (overlapCount > highestOverlapCount) {
+          highestOverlapCount = overlapCount;
+          codeToHide = code;
+        }
+      }
+
+      if (codeToHide == null) break;
+      visibleCodes.remove(codeToHide);
+      overlapHidden.add(codeToHide);
+    }
+
+    _overlapHiddenCourseCodes = overlapHidden;
+    invisibleCourseCodes = <String>[
+      ..._manuallyHiddenCourseCodes,
+      ..._overlapHiddenCourseCodes,
+    ];
   }
 
   Widget _buildCourseCard(
@@ -1273,22 +1372,37 @@ class CourseScaffoldState extends State<CourseScaffold> {
     required bool visibility,
   }) {
     if (visibility) {
-      invisibleCourseCodes.remove(course.code);
+      _manuallyHiddenCourseCodes.remove(course.code);
+      _preferredVisibleCourseCodes.removeAll(
+        _courseOverlapLookup[course.code] ?? <String>{},
+      );
+      _preferredVisibleCourseCodes.add(course.code);
     } else {
-      invisibleCourseCodes.add(course.code);
+      _manuallyHiddenCourseCodes.add(course.code);
+      _preferredVisibleCourseCodes.remove(course.code);
     }
+    _recomputeOverlapHiddenCourses();
     PreferenceUtil.instance.setStringList(
       '$_kCourseInvisibleKey${widget.courseNotifySaveKey}',
-      invisibleCourseCodes,
+      _manuallyHiddenCourseCodes.toList(),
+    );
+    PreferenceUtil.instance.setStringList(
+      '$_kCoursePreferredVisibleKey${widget.courseNotifySaveKey}',
+      _preferredVisibleCourseCodes.toList(),
     );
     setState(() {});
   }
 
   void fetchInvisibleCourseCodes() {
-    invisibleCourseCodes = PreferenceUtil.instance.getStringList(
+    _manuallyHiddenCourseCodes = PreferenceUtil.instance.getStringList(
       '$_kCourseInvisibleKey${widget.courseNotifySaveKey}',
       <String>[],
-    );
+    ).toSet();
+    _preferredVisibleCourseCodes = PreferenceUtil.instance.getStringList(
+      '$_kCoursePreferredVisibleKey${widget.courseNotifySaveKey}',
+      <String>[],
+    ).toSet();
+    _recomputeOverlapHiddenCourses();
     setState(() {});
   }
 }
@@ -1828,6 +1942,9 @@ class CourseList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
                       IconButton(
+                        key: ValueKey<String>(
+                          'course_visibility_${course.code}',
+                        ),
                         visualDensity: VisualDensity.compact,
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),

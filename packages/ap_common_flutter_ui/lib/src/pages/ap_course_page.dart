@@ -24,6 +24,7 @@ class ApCoursePage extends StatefulWidget {
     this.enableAddToCalendar = true,
     this.enableCaptureCourseTable = false,
     this.enableCustomCourse = false,
+    this.autoHideOverlappingCourses = false,
     this.androidResourceIcon,
     this.actions,
     this.showSectionTime,
@@ -53,6 +54,7 @@ class ApCoursePage extends StatefulWidget {
   final bool enableNotifyControl;
   final bool enableAddToCalendar;
   final bool enableCaptureCourseTable;
+  final bool autoHideOverlappingCourses;
 
   /// Enable the custom course feature (add/edit/delete).
   final bool enableCustomCourse;
@@ -72,8 +74,7 @@ class _ApCoursePageState extends State<ApCoursePage> {
   DataState<CourseData> _state = const DataLoading<CourseData>();
   SemesterData? _semesterData;
   CourseNotifyData? _notifyData;
-  final SemesterPickerController _pickerController =
-      SemesterPickerController();
+  final SemesterPickerController _pickerController = SemesterPickerController();
 
   /// API-fetched course data (before merging custom courses).
   CourseData? _apiCourseData;
@@ -113,20 +114,17 @@ class _ApCoursePageState extends State<ApCoursePage> {
 
   Future<void> _loadCourse() async {
     if (_semesterData == null) return;
-    final Semester semester =
-        _semesterData!.data[_semesterData!.currentIndex];
+    final Semester semester = _semesterData!.data[_semesterData!.currentIndex];
     setState(() => _state = const DataLoading<CourseData>());
     try {
       final CourseData courseData = await widget.onLoadCourse(semester);
       if (mounted) {
         _apiCourseData = courseData;
         if (widget.enableCustomCourse) {
-          _customCourseData =
-              CustomCourseData.load(_notifyCacheKey);
+          _customCourseData = CustomCourseData.load(_notifyCacheKey);
         }
         setState(() {
-          if (courseData.courses.isEmpty &&
-              _customCourseData.courses.isEmpty) {
+          if (courseData.courses.isEmpty && _customCourseData.courses.isEmpty) {
             _state = const DataEmpty<CourseData>();
             _pickerController.markSemesterEmpty(semester);
           } else {
@@ -134,8 +132,8 @@ class _ApCoursePageState extends State<ApCoursePage> {
                 courseData.mergeCustom(_customCourseData.courses);
             _state = DataLoaded<CourseData>(merged);
             _notifyData = CourseNotifyData.load(_notifyCacheKey);
-            final bool isDefault = _semesterData!.currentIndex ==
-                _semesterData!.defaultIndex;
+            final bool isDefault =
+                _semesterData!.currentIndex == _semesterData!.defaultIndex;
             widget.onCourseLoaded?.call(merged, isDefault);
             _pickerController.markSemesterHasData(semester);
           }
@@ -194,6 +192,7 @@ class _ApCoursePageState extends State<ApCoursePage> {
       enableAddToCalendar: widget.enableAddToCalendar,
       enableCaptureCourseTable: widget.enableCaptureCourseTable,
       enableCustomCourse: widget.enableCustomCourse,
+      autoHideOverlappingCourses: widget.autoHideOverlappingCourses,
       customCourseData: _customCourseData,
       onCustomCourseChanged: _onCustomCourseChanged,
       androidResourceIcon: widget.androidResourceIcon,

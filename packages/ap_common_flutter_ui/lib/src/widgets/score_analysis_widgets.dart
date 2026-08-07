@@ -192,7 +192,7 @@ class ScoreStatisticsCard extends StatelessWidget {
                       child: _ScoreStatItem(
                         label: context.ap.highestScore,
                         value: analysis.isGradePoint
-                            ? ScoreAnalysis.scoreToGradeLetter(
+                            ? ScoreAnalysis.gradePointToGradeLetter(
                                 analysis.maxScore,
                               )
                             : analysis.maxScore.toStringAsFixed(0),
@@ -205,7 +205,7 @@ class ScoreStatisticsCard extends StatelessWidget {
                       child: _ScoreStatItem(
                         label: context.ap.lowestScore,
                         value: analysis.isGradePoint
-                            ? ScoreAnalysis.scoreToGradeLetter(
+                            ? ScoreAnalysis.gradePointToGradeLetter(
                                 analysis.minScore,
                               )
                             : analysis.minScore.toStringAsFixed(0),
@@ -408,29 +408,21 @@ class ScoreDistributionCard extends StatelessWidget {
     );
   }
 
-  static const Map<String, Color> _gradeColors =
-      <String, Color>{
-    'A+': Color(0xFF4CAF50),
-    'A': Color(0xFF4CAF50),
-    'A-': Color(0xFF8BC34A),
-    'B+': Color(0xFF8BC34A),
-    'B': Color(0xFF2196F3),
-    'B-': Color(0xFF2196F3),
-    'C+': Color(0xFFFF9800),
-    'C': Color(0xFFFF9800),
-    'C-': Color(0xFFFF9800),
-    'D': Color(0xFFF44336),
-    'E': Color(0xFFF44336),
-    'F': Color(0xFFF44336),
-  };
-
   Widget _buildGradePointDistribution(ColorScheme colorScheme) {
     final Map<String, int> dist = analysis.distribution;
     final List<String> orderedGrades = <String>[
-      'A+', 'A', 'A-',
-      'B+', 'B', 'B-',
-      'C+', 'C', 'C-',
-      'D', 'E', 'F',
+      'A+',
+      'A',
+      'A-',
+      'B+',
+      'B',
+      'B-',
+      'C+',
+      'C',
+      'C-',
+      'D',
+      'E',
+      'F',
     ];
     final List<Widget> bars = <Widget>[];
     for (final String grade in orderedGrades) {
@@ -444,7 +436,7 @@ class ScoreDistributionCard extends StatelessWidget {
           label: grade,
           count: count,
           total: analysis.totalSubjects,
-          color: _gradeColors[grade] ?? colorScheme.primary,
+          color: ScoreColors.forGrade(grade, colorScheme.primary),
         ),
       );
     }
@@ -757,8 +749,7 @@ class ScoreGPACard extends StatelessWidget {
               context.ap.gpaDisclaimer,
               style: TextStyle(
                 fontSize: 12,
-                color:
-                    colorScheme.onSurfaceVariant.withAlpha(179),
+                color: colorScheme.onSurfaceVariant.withAlpha(179),
               ),
             ),
           ),
@@ -775,7 +766,9 @@ class ScoreGPACard extends StatelessWidget {
     final bool isGradePoint = analysis.isGradePoint;
     for (final Score score in analysis.scoreData.scores) {
       final String? raw = ScoreAnalysis.effectiveScoreStr(score);
-      final double? value = ScoreAnalysis.parseScore(raw);
+      final double? value = isGradePoint
+          ? ScoreAnalysis.parseGradePoint(raw)
+          : ScoreAnalysis.parseScore(raw);
       final bool isInvalid = value == null;
       entries.add(
         _GradeEntry(
@@ -784,9 +777,13 @@ class ScoreGPACard extends StatelessWidget {
           grade: isInvalid
               ? '-'
               : (isGradePoint
-                  ? (raw ?? '')
+                  ? ScoreAnalysis.gradePointToGradeLetter(value)
                   : ScoreAnalysis.scoreToGradeLetter(value)),
-          gradePoint: isInvalid ? 0.0 : ScoreAnalysis.scoreToGradePoint(value),
+          gradePoint: isInvalid
+              ? 0.0
+              : isGradePoint
+                  ? value
+                  : ScoreAnalysis.scoreToGradePoint(value),
           credits: double.tryParse(score.units) ?? 0,
         ),
       );

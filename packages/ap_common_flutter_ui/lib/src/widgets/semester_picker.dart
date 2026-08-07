@@ -164,6 +164,7 @@ class SemesterPicker extends StatefulWidget {
               initialChildSize: 0.6,
               minChildSize: 0.3,
               maxChildSize: 0.9,
+              expand: false,
               builder:
                   (BuildContext context, ScrollController scrollController) {
                 return Container(
@@ -193,12 +194,16 @@ class SemesterPicker extends StatefulWidget {
                               color: colorScheme.primary,
                             ),
                             const SizedBox(width: 12),
-                            Text(
-                              context.ap.pickSemester,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: colorScheme.onSurface,
+                            Expanded(
+                              child: Text(
+                                context.ap.pickSemester,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: colorScheme.onSurface,
+                                ),
                               ),
                             ),
                           ],
