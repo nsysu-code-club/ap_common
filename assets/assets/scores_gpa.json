@@ -1,0 +1,112 @@
+{
+    "scoreType": "gradePoint",
+    "scores": [
+        {
+            "courseNumber": "CSE201",
+            "isPreScore": false,
+            "title": " AI輔助程式設計",
+            "units": "3",
+            "hours": "",
+            "required": "",
+            "at": "",
+            "middleScore": "",
+            "generalScore": "",
+            "finalScore": "A",
+            "semesterScore": "",
+            "remark": ""
+        },
+        {
+            "courseNumber": "CSE3001",
+            "isPreScore": false,
+            "title": " 演算法",
+            "units": "3",
+            "hours": "",
+            "required": "",
+            "at": "",
+            "middleScore": "",
+            "generalScore": "",
+            "finalScore": "A+",
+            "semesterScore": "",
+            "remark": ""
+        },
+        {
+            "courseNumber": "CSE3002",
+            "isPreScore": false,
+            "title": " 物件導向程式設計",
+            "units": "3",
+            "hours": "",
+            "required": "",
+            "at": "",
+            "middleScore": "",
+            "generalScore": "",
+            "finalScore": "A+",
+            "semesterScore": "",
+            "remark": ""
+        },
+        {
+            "courseNumber": "CSE3003",
+            "isPreScore": false,
+            "title": " 組合語言與微處理機",
+            "units": "3",
+            "hours": "",
+            "required": "",
+            "at": "",
+            "middleScore": "",
+            "generalScore": "",
+            "finalScore": "A+",
+            "semesterScore": "",
+            "remark": ""
+        },
+        {
+            "courseNumber": "CSE399",
+            "isPreScore": false,
+            "title": " 機器學習導論",
+            "units": "3",
+            "hours": "",
+            "required": "",
+            "at": "",
+            "middleScore": "",
+            "generalScore": "",
+            "finalScore": "A+",
+            "semesterScore": "",
+            "remark": ""
+        },
+        {
+            "courseNumber": "CSE639",
+            "isPreScore": false,
+            "title": " 科技英文寫作",
+            "units": "3",
+            "hours": "",
+            "required": "",
+            "at": "",
+            "middleScore": "",
+            "generalScore": "",
+            "finalScore": "A+",
+            "semesterScore": "",
+            "remark": ""
+        },
+        {
+            "courseNumber": "GEAI1455",
+            "isPreScore": false,
+            "title": " 醫務管理概論",
+            "units": "3",
+            "hours": "",
+            "required": "",
+            "at": "",
+            "middleScore": "",
+            "generalScore": "",
+            "finalScore": "A+",
+            "semesterScore": "",
+            "remark": ""
+        }
+    ],
+    "detail": {
+        "creditTaken": 21.0,
+        "creditEarned": 21.0,
+        "average": 4.26,
+        "classRank": "2/28",
+        "departmentRank": null,
+        "classPercentage": 92.86,
+        "conduct": null
+    }
+}

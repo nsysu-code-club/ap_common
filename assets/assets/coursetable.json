@@ -1,0 +1,359 @@
+{
+  "courses": [
+    {
+      "code": "5044",
+      "title": "服務教育(二)",
+      "className": "四技服務教育(燕",
+      "group": "07",
+      "units": "0",
+      "hours": "2.0",
+      "required": "【必修】",
+      "at": "【學期】",
+      "sectionTimes": [
+        {
+          "weekday": 2,
+          "index": 5
+        },
+        {
+          "weekday": 4,
+          "index": 5
+        }
+      ],
+      "location": {
+        "room": "",
+        "building": ""
+      },
+      "instructors": [
+        "龔千芬"
+      ]
+    },
+    {
+      "code": "5231",
+      "title": "體育(四)-羽球",
+      "className": "四體二甲(建工)",
+      "group": "06",
+      "units": "0",
+      "hours": "2.0",
+      "required": "【必修】",
+      "at": "【學期】",
+      "sectionTimes": [
+        {
+          "weekday": 2,
+          "index": 8
+        },
+        {
+          "weekday": 2,
+          "index": 9
+        }
+      ],
+      "location": {
+        "room": "",
+        "building": ""
+      },
+      "instructors": [
+        "劉安球"
+      ]
+    },
+    {
+      "code": "3869",
+      "title": "微積分(二)",
+      "className": "智慧商務系一乙",
+      "group": "01",
+      "units": "3.0",
+      "hours": "3.0",
+      "required": "【必修】",
+      "at": "【學期】",
+      "sectionTimes": [
+        {
+          "weekday": 1,
+          "index": 0
+        },
+        {
+          "weekday": 1,
+          "index": 1
+        },
+        {
+          "weekday": 1,
+          "index": 2
+        },
+        {
+          "weekday": 1,
+          "index": 3
+        },
+        {
+          "weekday": 1,
+          "index": 4
+        },
+        {
+          "weekday": 2,
+          "index": 0
+        },
+        {
+          "weekday": 2,
+          "index": 1
+        }
+      ],
+      "location": {
+        "room": "MA212",
+        "building": ""
+      },
+      "instructors": [
+        "黃天受"
+      ]
+    },
+    {
+      "code": "3872",
+      "title": "Python程式設計",
+      "className": "智慧商務系一乙",
+      "group": "01",
+      "at": "【學期】",
+      "sectionTimes": [
+        {
+          "weekday": 5,
+          "index": 2
+        },
+        {
+          "weekday": 5,
+          "index": 3
+        },
+        {
+          "weekday": 5,
+          "index": 4
+        }
+      ],
+      "location": {
+        "room": "MA218",
+        "building": ""
+      },
+      "instructors": [
+        "李仕雄"
+      ]
+    },
+    {
+      "code": "3891",
+      "title": "財務管理",
+      "className": "智慧商務系三乙",
+      "group": "01",
+      "units": "3.0",
+      "hours": "3.0",
+      "required": "【必修】",
+      "at": "【學期】",
+      "sectionTimes": [
+        {
+          "weekday": 1,
+          "index": 6
+        },
+        {
+          "weekday": 1,
+          "index": 7
+        },
+        {
+          "weekday": 1,
+          "index": 8
+        }
+      ],
+      "location": {
+        "room": "MA213",
+        "building": ""
+      },
+      "instructors": [
+        "徐淑芳"
+      ]
+    },
+    {
+      "code": "3892",
+      "title": "實務專題(二)",
+      "className": "智慧商務系三乙",
+      "group": "01",
+      "units": "1.0",
+      "hours": "3.0",
+      "required": "【必修】",
+      "at": "【學期】",
+      "sectionTimes": [],
+      "location": {
+        "room": "教室未定",
+        "building": ""
+      },
+      "instructors": [
+        "侯易佑",
+        "傅振瑞",
+        "張俊陽",
+        "徐淑芳",
+        "李仕雄",
+        "柯博昌",
+        "謝文川",
+        "黃河銓"
+      ]
+    },
+    {
+      "code": "3893",
+      "title": "管理資訊系統",
+      "className": "智慧商務系三乙",
+      "group": "01",
+      "units": "3.0",
+      "hours": "3.0",
+      "required": "【必修】",
+      "at": "【學期】",
+      "sectionTimes": [
+        {
+          "weekday": 2,
+          "index": 2
+        },
+        {
+          "weekday": 2,
+          "index": 3
+        },
+        {
+          "weekday": 2,
+          "index": 4
+        }
+      ],
+      "location": {
+        "room": "MA212",
+        "building": ""
+      },
+      "instructors": [
+        "張俊陽"
+      ]
+    },
+    {
+      "code": "3894",
+      "title": "進階英語口語訓練",
+      "className": "智慧商務系三乙",
+      "group": "01",
+      "units": "3.0",
+      "hours": "3.0",
+      "required": "【選修】",
+      "at": "【學期】",
+      "sectionTimes": [
+        {
+          "weekday": 4,
+          "index": 2
+        },
+        {
+          "weekday": 4,
+          "index": 3
+        },
+        {
+          "weekday": 4,
+          "index": 4
+        }
+      ],
+      "location": {
+        "room": "MA202",
+        "building": ""
+      },
+      "instructors": [
+        "林黃淑化"
+      ]
+    },
+    {
+      "code": "3875",
+      "title": "統計學(二)",
+      "className": "智慧商務系二甲",
+      "group": "01",
+      "units": "3.0",
+      "hours": "3.0",
+      "required": "【必修】",
+      "at": "【學期】",
+      "sectionTimes": [
+        {
+          "weekday": 4,
+          "index": 6
+        },
+        {
+          "weekday": 4,
+          "index": 7
+        },
+        {
+          "weekday": 4,
+          "index": 8
+        }
+      ],
+      "location": {
+        "room": "MA213",
+        "building": ""
+      },
+      "instructors": [
+        "張添香"
+      ]
+    }
+  ],
+  "timeCodes": [
+    {
+      "title": "M",
+      "startTime": "07:10",
+      "endTime": "08:00"
+    },
+    {
+      "title": "1",
+      "startTime": "08:10",
+      "endTime": "09:00"
+    },
+    {
+      "title": "2",
+      "startTime": "09:10",
+      "endTime": "10:00"
+    },
+    {
+      "title": "3",
+      "startTime": "10:10",
+      "endTime": "11:00"
+    },
+    {
+      "title": "4",
+      "startTime": "11:10",
+      "endTime": "12:00"
+    },
+    {
+      "title": "A",
+      "startTime": "12:10",
+      "endTime": "13:00"
+    },
+    {
+      "title": "5",
+      "startTime": "13:30",
+      "endTime": "14:20"
+    },
+    {
+      "title": "6",
+      "startTime": "14:30",
+      "endTime": "15:20"
+    },
+    {
+      "title": "7",
+      "startTime": "15:30",
+      "endTime": "16:20"
+    },
+    {
+      "title": "8",
+      "startTime": "16:30",
+      "endTime": "17:20"
+    },
+    {
+      "title": "9",
+      "startTime": "17:30",
+      "endTime": "18:20"
+    },
+    {
+      "title": "10",
+      "startTime": "18:30",
+      "endTime": "19:20"
+    },
+    {
+      "title": "11",
+      "startTime": "19:25",
+      "endTime": "20:15"
+    },
+    {
+      "title": "12",
+      "startTime": "20:25",
+      "endTime": "21:15"
+    },
+    {
+      "title": "13",
+      "startTime": "21:25",
+      "endTime": "22:15"
+    }
+  ]
+}

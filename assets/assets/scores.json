@@ -1,0 +1,110 @@
+{
+    "scores": [
+        {
+            "title": "英語能力訓練",
+            "units": "0",
+            "hours": "2.0",
+            "required": "【必修】",
+            "at": "【學期】",
+            "middleScore": "",
+            "semesterScore": "",
+            "remark": "停修"
+        },
+        {
+            "title": "財務管理",
+            "units": "3.0",
+            "hours": "3.0",
+            "required": "【必修】",
+            "at": "【學期】",
+            "middleScore": "",
+            "semesterScore": "67.00",
+            "remark": ""
+        },
+        {
+            "title": "統計學(二)",
+            "units": "3.0",
+            "hours": "3.0",
+            "required": "【必修】",
+            "at": "【學期】",
+            "middleScore": "",
+            "semesterScore": "60.00",
+            "remark": ""
+        },
+        {
+            "title": "微積分(二)",
+            "units": "3.0",
+            "hours": "3.0",
+            "required": "【必修】",
+            "at": "【學期】",
+            "middleScore": "",
+            "semesterScore": "60.00",
+            "remark": ""
+        },
+        {
+            "title": "實務專題(二)",
+            "units": "1.0",
+            "hours": "3.0",
+            "required": "【必修】",
+            "at": "【學期】",
+            "middleScore": "",
+            "semesterScore": "98.00",
+            "remark": ""
+        },
+        {
+            "title": "管理資訊系統",
+            "units": "3.0",
+            "hours": "3.0",
+            "required": "【必修】",
+            "at": "【學期】",
+            "middleScore": "",
+            "semesterScore": "80.00",
+            "remark": ""
+        },
+        {
+            "title": "進階英語口語訓練",
+            "units": "3.0",
+            "hours": "3.0",
+            "required": "【選修】",
+            "at": "【學期】",
+            "middleScore": "",
+            "semesterScore": "90.00",
+            "remark": ""
+        },
+        {
+            "title": "Python程式設計",
+            "units": "3.0",
+            "hours": "3.0",
+            "required": "【選修】",
+            "at": "【學期】",
+            "middleScore": "100.00",
+            "semesterScore": "97.00",
+            "remark": ""
+        },
+        {
+            "title": "體育(四)-羽球",
+            "units": "0",
+            "hours": "2.0",
+            "required": "【必修】",
+            "at": "【學期】",
+            "middleScore": "",
+            "semesterScore": "63.00",
+            "remark": ""
+        },
+        {
+            "title": "服務教育(二)",
+            "units": "0",
+            "hours": "2.0",
+            "required": "【必修】",
+            "at": "【學期】",
+            "middleScore": "",
+            "semesterScore": "合格",
+            "remark": ""
+        }
+    ],
+    "detail": {
+        "conduct": 82.0,
+        "classRank": "25/34",
+        "departmentRank": "57/73",
+        "average": 76.84
+    }
+}
