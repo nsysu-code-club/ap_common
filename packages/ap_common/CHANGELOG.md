@@ -1,3 +1,10 @@
+## 1.0.1-dev.14
+
+ - **REFACTOR**(ui): fix lint errors and improve code quality. ([36a092bd](https://github.com/abc873693/ap_common/commit/36a092bd42002835b5ea2252c15d21f78d39691d))
+ - **FIX**(deps): downgrade ap_common version and fix flutter_ui constraint. ([c3167a59](https://github.com/abc873693/ap_common/commit/c3167a590546fcac8cc858dd4c97ac5b87d4be51))
+ - **DOCS**(announcement): fix Swagger spec for ban API. ([5a7efe3c](https://github.com/abc873693/ap_common/commit/5a7efe3ca6d3181024b69286451c3b5d3ebfa137))
+ - **DOCS**(swagger): sync announcement_api.json with current implementation. ([ce398d86](https://github.com/abc873693/ap_common/commit/ce398d865056f734652cf80454add2a2030aa101))
+
 ## 1.0.1-dev.13
 
  - **REFACTOR**(ui): fix lint errors and improve code quality. ([36a092bd](https://github.com/abc873693/ap_common/commit/36a092bd42002835b5ea2252c15d21f78d39691d))

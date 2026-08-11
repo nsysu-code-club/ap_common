@@ -1,6 +1,6 @@
 name: ap_common_flutter_core
 description: "The school affairs(AP) series shares the engineering kit, rapid development of the school affairs series(AP) app"
-version: 1.1.0-dev.14
+version: 1.1.0-dev.15
 homepage: https://github.com/abc873693/ap_common
 repository: https://github.com/abc873693/ap_common/tree/master/packages/ap_common_flutter_core
 
@@ -14,7 +14,7 @@ resolution: workspace
 dependencies:
   flutter:
     sdk: flutter
-  ap_common_core: ^1.0.1-dev.11
+  ap_common_core: ^1.0.1-dev.12
   dio: ^5.7.0
   intl: ">=0.16.0 <1.0.0"
   cross_file: ^0.3.4+2

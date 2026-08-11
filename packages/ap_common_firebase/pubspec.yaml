@@ -1,6 +1,6 @@
 name: ap_common_firebase
 description: ap_common for firebase instructure
-version: 1.0.1-dev.14
+version: 1.0.1-dev.15
 homepage: https://github.com/abc873693/ap_common
 repository: https://github.com/abc873693/ap_common/tree/master/packages/ap_common_firebase
 
@@ -14,7 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  ap_common_flutter_core: ^1.1.0-dev.14
+  ap_common_flutter_core: ^1.1.0-dev.15
 #    path: ../../GitHub-NKUST-ITC/ap_common
   url_launcher: ^6.1.0
   firebase_core: ^4.6.0

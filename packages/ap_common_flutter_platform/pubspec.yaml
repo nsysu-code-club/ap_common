@@ -1,6 +1,6 @@
 name: ap_common_flutter_platform
 description: "The school affairs(AP) series shares the engineering kit, rapid development of the school affairs series(AP) app"
-version: 1.0.1-dev.14
+version: 1.0.1-dev.15
 homepage: https://github.com/abc873693/ap_common
 repository: https://github.com/abc873693/ap_common/tree/master/packages/ap_common_flutter_platform
 
@@ -13,7 +13,7 @@ resolution: workspace
 dependencies:
   flutter:
     sdk: flutter
-  ap_common_flutter_core: ^1.1.0-dev.14
+  ap_common_flutter_core: ^1.1.0-dev.15
 
   # Dart Package
   clock: ^1.1.1

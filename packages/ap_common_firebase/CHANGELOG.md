@@ -1,3 +1,10 @@
+## 1.0.1-dev.15
+
+ - **REFACTOR**: fix lint warnings and replace debugPrint with log. ([67cec8cc](https://github.com/abc873693/ap_common/commit/67cec8cc05e0f5623ef510621787b077f1bf6b3e))
+ - **FIX**: resolve all pre-existing lint issues across packages. ([84db9998](https://github.com/abc873693/ap_common/commit/84db99986ccfac62b720cbf69f03bc021c154bc5))
+ - **FIX**(firebase): upgrade firebase deps and adapt to new API. ([7540d9db](https://github.com/abc873693/ap_common/commit/7540d9db6474bef1e6952a72366686389087f2ad))
+ - **FEAT**(firebase,announcement): wire FCM token for review push notifications. ([f3569aa7](https://github.com/abc873693/ap_common/commit/f3569aa73fa3dbfeb9a32b58906558c603a5aa79))
+
 ## 1.0.1-dev.14
 
  - **REFACTOR**: fix lint warnings and replace debugPrint with log. ([67cec8cc](https://github.com/abc873693/ap_common/commit/67cec8cc05e0f5623ef510621787b077f1bf6b3e))
