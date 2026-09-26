@@ -94,6 +94,7 @@ extension DioExceptionI18nExtension on DioException {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.receiveTimeout:
       case DioExceptionType.sendTimeout:
+      case DioExceptionType.transformTimeout:
         return ap.timeoutMessage;
       case DioExceptionType.badCertificate:
         return ap.unknownError;

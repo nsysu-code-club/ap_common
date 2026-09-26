@@ -3,6 +3,17 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  test('transform timeout uses the localized timeout message', () async {
+    for (final AppLocale locale in AppLocale.values) {
+      await setApLocale(locale);
+      final DioException exception = DioException(
+        requestOptions: RequestOptions(),
+        type: DioExceptionType.transformTimeout,
+      );
+      expect(exception.i18nMessage, ap.timeoutMessage);
+    }
+  });
+
   group('DioExceptionI18nExtension isJsonResponse', () {
     test('should return true for badResponse with Map data', () {
       final DioException exception = DioException(
