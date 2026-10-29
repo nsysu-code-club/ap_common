@@ -1,6 +1,12 @@
 name: CI Test
 on:
+  schedule:
+    # 01:17 UTC = 09:17 Asia/Taipei
+    - cron: '17 1 * * *'
+  workflow_dispatch:
   push:
+    branches:
+      - master
     tags-ignore:
       - '*v*'
   pull_request:
