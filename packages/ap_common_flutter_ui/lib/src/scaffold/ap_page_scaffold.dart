@@ -20,16 +20,23 @@ class ApPageScaffold extends StatelessWidget {
     Widget? bottomNavigationBar,
     Widget? drawer,
     Color? backgroundColor,
+    bool transparentAppBar = false,
+    Color? appBarForegroundColor,
     GlobalKey<ScaffoldState>? scaffoldKey,
     bool resizeToAvoidBottomInset = true,
   }) : _page = Builder(
           builder: (BuildContext context) {
             final ThemeData theme = Theme.of(context);
-            final Color foreground = theme.colorScheme.onSurface;
+            final Color foreground =
+                appBarForegroundColor ?? theme.colorScheme.onSurface;
+            final ModalRoute<dynamic>? route = ModalRoute.of(context);
+            final bool isFullscreenDialog =
+                route is PageRoute<dynamic> && route.fullscreenDialog;
             return Scaffold(
               key: scaffoldKey,
               backgroundColor: backgroundColor,
               resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+              extendBodyBehindAppBar: transparentAppBar,
               drawer: drawer,
               appBar: title == null
                   ? null
@@ -50,11 +57,16 @@ class ApPageScaffold extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                       foregroundColor: foreground,
-                      backgroundColor:
-                          (backgroundColor ?? theme.scaffoldBackgroundColor)
+                      iconTheme: IconThemeData(color: foreground, size: 24),
+                      actionsIconTheme:
+                          IconThemeData(color: foreground, size: 24),
+                      backgroundColor: transparentAppBar
+                          ? Colors.transparent
+                          : (backgroundColor ?? theme.scaffoldBackgroundColor)
                               .withValues(
-                        alpha: MediaQuery.highContrastOf(context) ? 1 : 0.8,
-                      ),
+                              alpha:
+                                  MediaQuery.highContrastOf(context) ? 1 : 0.8,
+                            ),
                       elevation: 0,
                       scrolledUnderElevation: 0,
                       surfaceTintColor: Colors.transparent,
@@ -62,25 +74,36 @@ class ApPageScaffold extends StatelessWidget {
                       leading: leading ??
                           (automaticallyImplyLeading &&
                                   Navigator.of(context).canPop()
-                              ? IconButton(
-                                  icon: Icon(ApIcon.chevronLeft),
-                                  tooltip: MaterialLocalizations.of(context)
-                                      .backButtonTooltip,
-                                  onPressed: () =>
-                                      Navigator.of(context).maybePop(),
-                                )
+                              ? isFullscreenDialog
+                                  ? CloseButton(color: foreground)
+                                  : IconButton(
+                                      icon: Icon(
+                                        ApIcon.chevronLeft,
+                                        color: foreground,
+                                      ),
+                                      tooltip: MaterialLocalizations.of(context)
+                                          .backButtonTooltip,
+                                      onPressed: () =>
+                                          Navigator.of(context).maybePop(),
+                                    )
                               : null),
-                      actions: actions,
+                      actions: actions.isEmpty ? null : actions,
                       bottom: bottom,
-                      flexibleSpace: ClipRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(
-                            sigmaX: MediaQuery.highContrastOf(context) ? 0 : 12,
-                            sigmaY: MediaQuery.highContrastOf(context) ? 0 : 12,
-                          ),
-                          child: const SizedBox.expand(),
-                        ),
-                      ),
+                      flexibleSpace: transparentAppBar
+                          ? null
+                          : ClipRect(
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                  sigmaX: MediaQuery.highContrastOf(context)
+                                      ? 0
+                                      : 12,
+                                  sigmaY: MediaQuery.highContrastOf(context)
+                                      ? 0
+                                      : 12,
+                                ),
+                                child: const SizedBox.expand(),
+                              ),
+                            ),
                     ),
               body: body,
               floatingActionButton: floatingActionButton,
@@ -301,59 +324,76 @@ class _ApNestedPage extends StatelessWidget {
         controller: controller,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) =>
             <Widget>[
-          CupertinoSliverNavigationBar(
-            automaticallyImplyLeading: false,
-            automaticallyImplyTitle: false,
-            transitionBetweenRoutes: false,
-            stretch: !MediaQuery.disableAnimationsOf(context),
-            backgroundColor: theme.scaffoldBackgroundColor.withValues(
-              alpha: MediaQuery.highContrastOf(context) ? 1 : 0.8,
-            ),
-            border: null,
-            largeTitle: Text(title),
-            alwaysShowMiddle: false,
-            middle: Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: Navigator.of(context).canPop() ? 0 : 10,
-                ),
-                child: Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+          // Absorb the pinned bar's overlap so the outer view only scrolls
+          // the collapsible large title instead of sliding the body under
+          // the pinned bar.
+          SliverOverlapAbsorber(
+            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+            sliver: CupertinoSliverNavigationBar(
+              automaticallyImplyLeading: false,
+              automaticallyImplyTitle: false,
+              transitionBetweenRoutes: false,
+              stretch: !MediaQuery.disableAnimationsOf(context),
+              backgroundColor: theme.scaffoldBackgroundColor.withValues(
+                alpha: MediaQuery.highContrastOf(context) ? 1 : 0.8,
+              ),
+              border: null,
+              largeTitle: Text(title),
+              alwaysShowMiddle: false,
+              middle: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: Navigator.of(context).canPop() ? 0 : 10,
+                  ),
+                  child: Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
-            ),
-            leading: Navigator.of(context).canPop()
-                ? IconButton(
-                    icon: Icon(ApIcon.chevronLeft),
-                    tooltip:
-                        MaterialLocalizations.of(context).backButtonTooltip,
-                    onPressed: () => Navigator.of(context).maybePop(),
-                  )
-                : null,
-            trailing: actions.isEmpty
-                ? null
-                : ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: MediaQuery.sizeOf(context).width * 0.72,
-                    ),
-                    child: SizedBox(
-                      height: 44,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: actions,
+              leading: Navigator.of(context).canPop()
+                  ? IconButton(
+                      icon: Icon(
+                        ApIcon.chevronLeft,
+                        color: theme.colorScheme.onSurface,
+                      ),
+                      tooltip:
+                          MaterialLocalizations.of(context).backButtonTooltip,
+                      onPressed: () => Navigator.of(context).maybePop(),
+                    )
+                  : null,
+              trailing: actions.isEmpty
+                  ? null
+                  : ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.sizeOf(context).width * 0.72,
+                      ),
+                      child: SizedBox(
+                        height: 44,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: actions,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-            bottom: bottom,
+              bottom: bottom,
+            ),
           ),
         ],
-        body: Builder(builder: builder),
+        // The absorbed overlap is the pinned bar: status bar + toolbar
+        // (`bottom` collapses with the large title in automatic mode).
+        body: Padding(
+          padding: EdgeInsets.only(
+            top: MediaQuery.paddingOf(context).top +
+                kMinInteractiveDimensionCupertino,
+          ),
+          child: Builder(builder: builder),
+        ),
       ),
     );
   }

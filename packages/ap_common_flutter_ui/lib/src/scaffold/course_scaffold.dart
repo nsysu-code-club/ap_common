@@ -562,18 +562,20 @@ class CourseScaffoldState extends State<CourseScaffold> {
                           color: Theme.of(context)
                               .colorScheme
                               .surfaceContainerHighest,
-                          child: CourseList(
-                            courses: widget.courseData.courses,
-                            timeCodes: widget.courseData.timeCodes,
-                            invisibleCourseCodes: invisibleCourseCodes,
-                            getCourseColor: _getCourseColor,
-                            onVisibilityChanged: (
-                              Course course,
-                              bool visibility,
-                            ) =>
-                                saveInvisibleCourseCodes(
-                              course: course,
-                              visibility: visibility,
+                          child: PrimaryScrollController.none(
+                            child: CourseList(
+                              courses: widget.courseData.courses,
+                              timeCodes: widget.courseData.timeCodes,
+                              invisibleCourseCodes: invisibleCourseCodes,
+                              getCourseColor: _getCourseColor,
+                              onVisibilityChanged: (
+                                Course course,
+                                bool visibility,
+                              ) =>
+                                  saveInvisibleCourseCodes(
+                                course: course,
+                                visibility: visibility,
+                              ),
                             ),
                           ),
                         ),

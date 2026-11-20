@@ -12,12 +12,16 @@ class ApDestination {
     required this.icon,
     required this.builder,
     this.selectedIcon,
+    this.showBadge = false,
+    this.badgeLabel,
   });
 
   final String id;
   final String label;
   final IconData icon;
   final IconData? selectedIcon;
+  final bool showBadge;
+  final String? badgeLabel;
   final WidgetBuilder builder;
 }
 
@@ -121,12 +125,13 @@ class _ApAppShellState extends State<ApAppShell> {
       (ApDestination destination) => destination.id == _selectedId,
     );
     final bool nestedBack = _handlesBack[_selectedId] ?? false;
-    final bool showControls = MediaQuery.viewInsetsOf(context).bottom == 0;
+    final bool keyboardVisible = MediaQuery.viewInsetsOf(context).bottom > 0;
+    final bool showControls = !keyboardVisible && !nestedBack;
     final Widget body = Builder(
       builder: (BuildContext bodyContext) {
         final MediaQueryData mediaQuery = MediaQuery.of(bodyContext);
         final double bottomInset =
-            showControls ? mediaQuery.padding.bottom : 0;
+            !keyboardVisible ? mediaQuery.padding.bottom : 0;
         return MediaQuery(
           data: mediaQuery.copyWith(
             padding: mediaQuery.padding.copyWith(bottom: 0),
@@ -169,6 +174,11 @@ class _ApAppShellState extends State<ApAppShell> {
                           icon: item.icon,
                           activeIcon: item.selectedIcon,
                           label: item.label,
+                          showBadge: item.showBadge,
+                          semanticsLabel:
+                              item.showBadge && item.badgeLabel != null
+                                  ? '${item.label}, ${item.badgeLabel}'
+                                  : item.label,
                         ),
                     ],
                   )
@@ -190,9 +200,11 @@ class _ApAppShellState extends State<ApAppShell> {
                         destinations: <NavigationDestination>[
                           for (final ApDestination item in widget.destinations)
                             NavigationDestination(
-                              icon: Icon(item.icon),
-                              selectedIcon:
-                                  Icon(item.selectedIcon ?? item.icon),
+                              icon: _destinationIcon(item, item.icon),
+                              selectedIcon: _destinationIcon(
+                                item,
+                                item.selectedIcon ?? item.icon,
+                              ),
                               label: item.label,
                             ),
                         ],
@@ -206,6 +218,15 @@ class _ApAppShellState extends State<ApAppShell> {
   void _selectIndex(int index) {
     _select(widget.destinations[index].id);
   }
+
+  Widget _destinationIcon(ApDestination item, IconData icon) => Semantics(
+        label: item.showBadge ? item.badgeLabel : null,
+        child: Badge(
+          isLabelVisible: item.showBadge,
+          backgroundColor: const Color(0xFFFF3B30),
+          child: Icon(icon),
+        ),
+      );
 
   Widget _buildDestination(
     ApDestination destination,
@@ -251,8 +272,8 @@ class _ApAppShellState extends State<ApAppShell> {
               onGenerateRoute: (RouteSettings settings) {
                 if (settings.name != Navigator.defaultRouteName) return null;
                 Widget buildPage(BuildContext context) {
-                  final _ApDestinationScope scope = context
-                      .dependOnInheritedWidgetOfExactType<
+                  final _ApDestinationScope scope =
+                      context.dependOnInheritedWidgetOfExactType<
                           _ApDestinationScope>()!;
                   return SizedBox.expand(
                     child: ColoredBox(

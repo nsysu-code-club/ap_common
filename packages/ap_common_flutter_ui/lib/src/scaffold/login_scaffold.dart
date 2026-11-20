@@ -15,6 +15,7 @@ class LoginScaffold extends StatefulWidget {
     this.logoMode = LogoMode.text,
     this.logoSubtitle,
     this.appBarTitle,
+    this.showBackButton = true,
   });
 
   final LogoMode logoMode;
@@ -22,10 +23,9 @@ class LoginScaffold extends StatefulWidget {
   final String? logoSubtitle;
   final List<Widget> forms;
 
-  /// When set, displays an [AppBar] with a back button
-  /// and this title. Useful when the login page is pushed
-  /// onto the navigation stack.
+  /// Retained for source compatibility. Login headers no longer show a title.
   final String? appBarTitle;
+  final bool showBackButton;
 
   static const String routerName = '/login';
 
@@ -44,7 +44,12 @@ class LoginScaffoldState extends State<LoginScaffold> {
 
     return ApPageScaffold(
       resizeToAvoidBottomInset: orientation == Orientation.portrait,
-      title: widget.appBarTitle == null ? null : Text(widget.appBarTitle!),
+      title: widget.showBackButton && Navigator.of(context).canPop()
+          ? const SizedBox.shrink()
+          : null,
+      transparentAppBar: true,
+      appBarForegroundColor:
+          isDark ? colorScheme.onSurface : colorScheme.onPrimary,
       body: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(

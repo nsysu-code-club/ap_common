@@ -246,14 +246,16 @@ class ScoreScaffoldState extends State<ScoreScaffold> {
                     child: ColoredBox(
                       color:
                           Theme.of(context).colorScheme.surfaceContainerHighest,
-                      child: _ScoreListTab(
-                        scoreData: widget.scoreData!,
-                        onRefresh: widget.onRefresh,
-                        middleTitle: widget.middleTitle,
-                        finalTitle: widget.finalTitle,
-                        onScoreSelect: widget.onScoreSelect,
-                        middleScoreBuilder: widget.middleScoreBuilder,
-                        finalScoreBuilder: widget.finalScoreBuilder,
+                      child: PrimaryScrollController.none(
+                        child: _ScoreListTab(
+                          scoreData: widget.scoreData!,
+                          onRefresh: widget.onRefresh,
+                          middleTitle: widget.middleTitle,
+                          finalTitle: widget.finalTitle,
+                          onScoreSelect: widget.onScoreSelect,
+                          middleScoreBuilder: widget.middleScoreBuilder,
+                          finalScoreBuilder: widget.finalScoreBuilder,
+                        ),
                       ),
                     ),
                   ),
@@ -606,14 +608,17 @@ class _ScoreListTab extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Row(
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 4,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: <Widget>[
-                        _buildTag(
-                          colorScheme,
-                          score.required ?? '',
-                          colorScheme.tertiary,
-                        ),
-                        const SizedBox(width: 8),
+                        if (score.required?.isNotEmpty ?? false)
+                          _buildTag(
+                            colorScheme,
+                            score.required!,
+                            colorScheme.tertiary,
+                          ),
                         Text(
                           context.ap.unitCountFormat(
                             arg1: score.units,

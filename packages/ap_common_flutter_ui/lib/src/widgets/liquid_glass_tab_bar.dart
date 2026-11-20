@@ -12,12 +12,14 @@ class LiquidGlassTabItem {
     this.activeIcon,
     required this.label,
     this.semanticsLabel,
+    this.showBadge = false,
   });
 
   final IconData icon;
   final IconData? activeIcon;
   final String label;
   final String? semanticsLabel;
+  final bool showBadge;
 }
 
 class LiquidGlassTabBar extends StatelessWidget {
@@ -196,12 +198,16 @@ class _TabBarDestinationButtonState extends State<_TabBarDestinationButton> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Icon(
-                        widget.isSelected
-                            ? (widget.item.activeIcon ?? widget.item.icon)
-                            : widget.item.icon,
-                        size: 23,
-                        color: foreground,
+                      Badge(
+                        isLabelVisible: widget.item.showBadge,
+                        backgroundColor: const Color(0xFFFF3B30),
+                        child: Icon(
+                          widget.isSelected
+                              ? (widget.item.activeIcon ?? widget.item.icon)
+                              : widget.item.icon,
+                          size: 23,
+                          color: foreground,
+                        ),
                       ),
                       const SizedBox(height: 2),
                       Text(
