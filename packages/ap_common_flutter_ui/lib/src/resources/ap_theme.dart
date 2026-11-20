@@ -390,29 +390,41 @@ class ApTheme extends InheritedWidget {
   static ThemeData light(
     Color seedColor, {
     CoursePaletteTheme coursePalette = CoursePaletteTheme.material,
+    bool surfaceAppBar = false,
   }) {
     final ColorScheme colorScheme = ColorScheme.fromSeed(
       seedColor: seedColor,
     );
-    return _buildTheme(colorScheme, coursePalette);
+    return _buildTheme(
+      colorScheme,
+      coursePalette,
+      surfaceAppBar: surfaceAppBar,
+    );
   }
 
   static ThemeData dark(
     Color seedColor, {
     CoursePaletteTheme coursePalette = CoursePaletteTheme.material,
+    bool surfaceAppBar = false,
   }) {
     final ColorScheme colorScheme = ColorScheme.fromSeed(
       seedColor: seedColor,
       brightness: Brightness.dark,
     );
-    return _buildTheme(colorScheme, coursePalette);
+    return _buildTheme(
+      colorScheme,
+      coursePalette,
+      surfaceAppBar: surfaceAppBar,
+    );
   }
 
   static ThemeData _buildTheme(
     ColorScheme colorScheme,
-    CoursePaletteTheme coursePalette,
-  ) {
+    CoursePaletteTheme coursePalette, {
+    bool surfaceAppBar = false,
+  }) {
     final bool isLight = colorScheme.brightness == Brightness.light;
+    final bool usePrimaryAppBar = isLight && !surfaceAppBar;
 
     return ThemeData(
       useMaterial3: true,
@@ -425,17 +437,20 @@ class ApTheme extends InheritedWidget {
         centerTitle: true,
         elevation: 0,
         scrolledUnderElevation: 1,
-        backgroundColor: isLight ? colorScheme.primary : colorScheme.surface,
+        backgroundColor:
+            usePrimaryAppBar ? colorScheme.primary : colorScheme.surface,
         foregroundColor:
-            isLight ? colorScheme.onPrimary : colorScheme.onSurface,
+            usePrimaryAppBar ? colorScheme.onPrimary : colorScheme.onSurface,
         titleTextStyle: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          color: isLight ? colorScheme.onPrimary : colorScheme.onSurface,
+          color:
+              usePrimaryAppBar ? colorScheme.onPrimary : colorScheme.onSurface,
           letterSpacing: 0.5,
         ),
         iconTheme: IconThemeData(
-          color: isLight ? colorScheme.onPrimary : colorScheme.onSurface,
+          color:
+              usePrimaryAppBar ? colorScheme.onPrimary : colorScheme.onSurface,
         ),
       ),
       cardTheme: CardThemeData(
@@ -707,11 +722,13 @@ class ApTheme extends InheritedWidget {
         circularTrackColor: colorScheme.surfaceContainerHighest,
       ),
       tabBarTheme: TabBarThemeData(
-        labelColor: isLight ? colorScheme.onPrimary : colorScheme.primary,
-        unselectedLabelColor: isLight
+        labelColor:
+            usePrimaryAppBar ? colorScheme.onPrimary : colorScheme.primary,
+        unselectedLabelColor: usePrimaryAppBar
             ? colorScheme.onPrimary.withAlpha(179)
             : colorScheme.onSurfaceVariant,
-        indicatorColor: isLight ? colorScheme.onPrimary : colorScheme.primary,
+        indicatorColor:
+            usePrimaryAppBar ? colorScheme.onPrimary : colorScheme.primary,
         indicatorSize: TabBarIndicatorSize.tab,
         dividerColor: const Color(0x00000000),
         labelStyle: const TextStyle(

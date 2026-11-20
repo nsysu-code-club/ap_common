@@ -35,12 +35,15 @@ class QuickInfoRow extends StatelessWidget {
     if (items.isEmpty) return const SizedBox.shrink();
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
+    final Color cardColor =
+        Theme.of(context).cardTheme.color ?? colorScheme.surfaceContainerLowest;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: <Widget>[
           for (int i = 0; i < items.length; i++) ...<Widget>[
-            Expanded(child: _buildChip(colorScheme, items[i])),
+            Expanded(child: _buildChip(colorScheme, cardColor, items[i])),
             if (i < items.length - 1) const SizedBox(width: 10),
           ],
         ],
@@ -48,9 +51,13 @@ class QuickInfoRow extends StatelessWidget {
     );
   }
 
-  Widget _buildChip(ColorScheme colorScheme, QuickInfoItem item) {
+  Widget _buildChip(
+    ColorScheme colorScheme,
+    Color cardColor,
+    QuickInfoItem item,
+  ) {
     return Material(
-      color: colorScheme.surfaceContainerLowest,
+      color: cardColor,
       borderRadius: BorderRadius.circular(14),
       child: InkWell(
         onTap: item.onTap,
@@ -175,20 +182,28 @@ class TodayScheduleCard extends StatelessWidget {
         ? context.ap.tomorrowScheduleTitle
         : context.ap.todayScheduleTitle;
 
+    final Color cardColor =
+        Theme.of(context).cardTheme.color ?? colorScheme.surfaceContainerLowest;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: colorScheme.surfaceContainerLowest,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: colorScheme.outlineVariant.withAlpha(77),
-            ),
-          ),
+      child: Semantics(
+        button: onTap != null,
+        child: Material(
+          color: cardColor,
+          borderRadius: BorderRadius.circular(20),
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: colorScheme.outlineVariant.withAlpha(77),
+                ),
+              ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -240,7 +255,9 @@ class TodayScheduleCard extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ),
+  ),
+);
   }
 
   Widget _buildRow(

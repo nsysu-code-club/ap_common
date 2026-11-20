@@ -65,6 +65,11 @@ class UserInfoScaffoldState extends State<UserInfoScaffold> {
             SliverAppBar(
               expandedHeight: 200,
               pinned: true,
+              foregroundColor:
+                  isDark ? colorScheme.onSurface : colorScheme.onPrimary,
+              iconTheme: IconThemeData(
+                color: isDark ? colorScheme.onSurface : colorScheme.onPrimary,
+              ),
               flexibleSpace: FlexibleSpaceBar(
                 background: DecoratedBox(
                   decoration: BoxDecoration(

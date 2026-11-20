@@ -477,7 +477,7 @@ class ApLocalizations with BaseTranslations<AppLocale, ApLocalizations> {
 	String get leave => 'Absence Records System';
 
 	/// en: 'Campus Bus System'
-	String get bus => 'Campus Bus System';
+	String get bus => 'Campus Bus';
 
 	/// en: 'Course Selection Simulator'
 	String get simcourse => 'Course Selection Simulator';
@@ -1596,7 +1596,7 @@ extension on ApLocalizations {
 			'course' => 'Schedule',
 			'score' => 'Transcript',
 			'leave' => 'Absence Records System',
-			'bus' => 'Campus Bus System',
+			'bus' => 'Campus Bus',
 			'simcourse' => 'Course Selection Simulator',
 			'schoolInfo' => 'School Info',
 			'userInfo' => 'Personal Info',

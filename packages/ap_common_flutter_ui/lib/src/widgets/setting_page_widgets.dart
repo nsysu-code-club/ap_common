@@ -57,10 +57,12 @@ class SettingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final Color cardColor =
+        Theme.of(context).cardTheme.color ?? colorScheme.surfaceContainerLowest;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerLowest,
+        color: cardColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: colorScheme.outlineVariant.withAlpha(77),
