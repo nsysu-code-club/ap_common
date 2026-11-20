@@ -502,6 +502,48 @@ class ApLocalizationsJa extends ApLocalizations with BaseTranslations<AppLocale,
 	@override String unitCountFormat({required Object arg1}) => '${arg1}単位';
 	@override String midtermPrefix({required Object arg1}) => '中間: ${arg1}';
 	@override String get noClassAlready => '今日はもう授業がありません';
+	@override String get announcementSubmissionSystem => 'ホーム画面カルーセル投稿';
+	@override String get carouselCover => 'カルーセルの表紙';
+	@override String get carouselPick => '表紙画像を選択';
+	@override String get carouselReplace => '画像を変更';
+	@override String get carouselImageRequired => '表紙画像をアップロードしてください';
+	@override String get carouselUploadFailed => 'アップロードに失敗しました。画像を選び直してください。';
+	@override String get carouselDetails => 'イベント情報';
+	@override String get carouselLink => 'イベントリンク（任意）';
+	@override String get carouselLinkError => 'https または http の完全な URL を入力してください';
+	@override String get carouselSetExpiry => '期限を設定';
+	@override String get carouselNoExpiry => '期限なし';
+	@override String get carouselExpired => '現在より後の期限を選択してください';
+	@override String get carouselBody => 'イベントの説明';
+	@override String get carouselBodyHint => 'イベントの説明を入力…';
+	@override String get carouselCheck => '確認';
+	@override String get carouselSubmitFailed => '投稿を送信できませんでした。もう一度お試しください。';
+	@override String get carouselPreview => '投稿内容の確認';
+	@override String get carouselBold => '太字';
+	@override String get carouselItalic => '斜体';
+	@override String get carouselSize => '文字サイズ';
+	@override String get carouselSmall => '小';
+	@override String get carouselNormal => '標準';
+	@override String get carouselLarge => '大';
+	@override String get carouselBullet => '箇条書き';
+	@override String get carouselOrdered => '番号付きリスト';
+	@override String get carouselIndent => 'インデントを増やす';
+	@override String get carouselOutdent => 'インデントを減らす';
+	@override String get carouselOpenLink => 'イベントリンクを開く';
+	@override String get carouselZoom => '表紙画像を拡大';
+	@override String pendingAnnouncementCount({required Object count}) => '未審査のお知らせ ${count} 件';
+	@override String get announcementGoogleSignIn => 'Google でログイン';
+	@override String get announcementAppleSignIn => 'Apple でログイン';
+	@override String get addPublishedAnnouncement => 'お知らせを追加';
+	@override String get announcementReviewQueue => '投稿審査';
+	@override String get publishedAnnouncements => '公開済みのお知らせ';
+	@override String get approveAnnouncement => '承認';
+	@override String get rejectAnnouncement => '差し戻し';
+	@override String get announcementApplicantCopied => '申請者のアカウントをコピーしました';
+	@override String announcementDeadline({required Object date}) => '締切日 ${date}';
+	@override String announcementItemActions({required Object title}) => '「${title}」のその他の操作';
+	@override String get deleteReviewApplication => '投稿を削除';
+	@override String confirmAnnouncementDeletion({required Object title}) => '「${title}」を削除しますか？';
 }
 
 /// The flat map containing all translations for locale <ja>.
@@ -975,6 +1017,48 @@ extension on ApLocalizationsJa {
 			'unitCountFormat' => ({required Object arg1}) => '${arg1}単位',
 			'midtermPrefix' => ({required Object arg1}) => '中間: ${arg1}',
 			'noClassAlready' => '今日はもう授業がありません',
+			'announcementSubmissionSystem' => 'ホーム画面カルーセル投稿',
+			'carouselCover' => 'カルーセルの表紙',
+			'carouselPick' => '表紙画像を選択',
+			'carouselReplace' => '画像を変更',
+			'carouselImageRequired' => '表紙画像をアップロードしてください',
+			'carouselUploadFailed' => 'アップロードに失敗しました。画像を選び直してください。',
+			'carouselDetails' => 'イベント情報',
+			'carouselLink' => 'イベントリンク（任意）',
+			'carouselLinkError' => 'https または http の完全な URL を入力してください',
+			'carouselSetExpiry' => '期限を設定',
+			'carouselNoExpiry' => '期限なし',
+			'carouselExpired' => '現在より後の期限を選択してください',
+			'carouselBody' => 'イベントの説明',
+			'carouselBodyHint' => 'イベントの説明を入力…',
+			'carouselCheck' => '確認',
+			'carouselSubmitFailed' => '投稿を送信できませんでした。もう一度お試しください。',
+			'carouselPreview' => '投稿内容の確認',
+			'carouselBold' => '太字',
+			'carouselItalic' => '斜体',
+			'carouselSize' => '文字サイズ',
+			'carouselSmall' => '小',
+			'carouselNormal' => '標準',
+			'carouselLarge' => '大',
+			'carouselBullet' => '箇条書き',
+			'carouselOrdered' => '番号付きリスト',
+			'carouselIndent' => 'インデントを増やす',
+			'carouselOutdent' => 'インデントを減らす',
+			'carouselOpenLink' => 'イベントリンクを開く',
+			'carouselZoom' => '表紙画像を拡大',
+			'pendingAnnouncementCount' => ({required Object count}) => '未審査のお知らせ ${count} 件',
+			'announcementGoogleSignIn' => 'Google でログイン',
+			'announcementAppleSignIn' => 'Apple でログイン',
+			'addPublishedAnnouncement' => 'お知らせを追加',
+			'announcementReviewQueue' => '投稿審査',
+			'publishedAnnouncements' => '公開済みのお知らせ',
+			'approveAnnouncement' => '承認',
+			'rejectAnnouncement' => '差し戻し',
+			'announcementApplicantCopied' => '申請者のアカウントをコピーしました',
+			'announcementDeadline' => ({required Object date}) => '締切日 ${date}',
+			'announcementItemActions' => ({required Object title}) => '「${title}」のその他の操作',
+			'deleteReviewApplication' => '投稿を削除',
+			'confirmAnnouncementDeletion' => ({required Object title}) => '「${title}」を削除しますか？',
 			_ => null,
 		};
 	}

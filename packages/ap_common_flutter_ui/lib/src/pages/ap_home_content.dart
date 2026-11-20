@@ -35,11 +35,13 @@ class ApHomeContent extends StatelessWidget {
     required this.labels,
     this.subtitle,
     this.additionalEntries = const <Widget>[],
+    this.dashboardWidgets = const <Widget>[],
     required this.isLogin,
     required this.userInfo,
     required this.displayPicture,
     required this.announcementState,
     required this.announcements,
+    this.announcementExcerpt,
     required this.courseData,
     required this.onAvatarTap,
     required this.onLoginTap,
@@ -54,11 +56,15 @@ class ApHomeContent extends StatelessWidget {
   final String? subtitle;
   final ApHomeContentLabels labels;
   final List<Widget> additionalEntries;
+  final List<Widget> dashboardWidgets;
   final bool isLogin;
   final UserInfo? userInfo;
   final bool displayPicture;
   final HomeState announcementState;
   final List<Announcement> announcements;
+
+  /// Formats the card summary. Defaults to the announcement description.
+  final String Function(Announcement)? announcementExcerpt;
   final CourseData? courseData;
   final VoidCallback onAvatarTap;
   final VoidCallback onLoginTap;
@@ -82,6 +88,7 @@ class ApHomeContent extends StatelessWidget {
       onAvatarTap: onAvatarTap,
       onRefresh: onRefreshAnnouncements,
       children: <Widget>[
+        ...dashboardWidgets,
         _buildScheduleOrLoginSection(context),
         _buildAnnouncementsSection(context),
         ...additionalEntries,
@@ -343,6 +350,7 @@ class ApHomeContent extends StatelessWidget {
               final Announcement item = announcements[index];
               return _AnnouncementHeroCard(
                 announcement: item,
+                excerpt: announcementExcerpt?.call(item) ?? item.description,
                 onTap: () => onAnnouncementTap(item),
               );
             },
@@ -355,9 +363,11 @@ class ApHomeContent extends StatelessWidget {
 class _AnnouncementHeroCard extends StatelessWidget {
   const _AnnouncementHeroCard({
     required this.announcement,
+    required this.excerpt,
     required this.onTap,
   });
   final Announcement announcement;
+  final String excerpt;
   final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
@@ -427,10 +437,10 @@ class _AnnouncementHeroCard extends StatelessWidget {
                             height: 1.25,
                           ),
                         ),
-                        if (announcement.description.isNotEmpty) ...<Widget>[
+                        if (excerpt.isNotEmpty) ...<Widget>[
                           const SizedBox(height: 6),
                           Text(
-                            announcement.description,
+                            excerpt,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

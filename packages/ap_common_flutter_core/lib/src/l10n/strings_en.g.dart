@@ -1441,6 +1441,132 @@ class ApLocalizations with BaseTranslations<AppLocale, ApLocalizations> {
 
 	/// en: 'No more classes today'
 	String get noClassAlready => 'No more classes today';
+
+	/// en: 'Homepage Carousel Submissions'
+	String get announcementSubmissionSystem => 'Homepage Carousel Submissions';
+
+	/// en: 'Carousel cover'
+	String get carouselCover => 'Carousel cover';
+
+	/// en: 'Choose cover image'
+	String get carouselPick => 'Choose cover image';
+
+	/// en: 'Replace image'
+	String get carouselReplace => 'Replace image';
+
+	/// en: 'Upload a cover image to continue'
+	String get carouselImageRequired => 'Upload a cover image to continue';
+
+	/// en: 'Upload failed. Choose the image again.'
+	String get carouselUploadFailed => 'Upload failed. Choose the image again.';
+
+	/// en: 'Event details'
+	String get carouselDetails => 'Event details';
+
+	/// en: 'Event link (optional)'
+	String get carouselLink => 'Event link (optional)';
+
+	/// en: 'Enter a full https or http URL'
+	String get carouselLinkError => 'Enter a full https or http URL';
+
+	/// en: 'Set expiration'
+	String get carouselSetExpiry => 'Set expiration';
+
+	/// en: 'No expiration'
+	String get carouselNoExpiry => 'No expiration';
+
+	/// en: 'Choose a future expiration time'
+	String get carouselExpired => 'Choose a future expiration time';
+
+	/// en: 'Event description'
+	String get carouselBody => 'Event description';
+
+	/// en: 'Enter an event description…'
+	String get carouselBodyHint => 'Enter an event description…';
+
+	/// en: 'Review'
+	String get carouselCheck => 'Review';
+
+	/// en: 'Your submission could not be sent. Please try again.'
+	String get carouselSubmitFailed => 'Your submission could not be sent. Please try again.';
+
+	/// en: 'Review submission'
+	String get carouselPreview => 'Review submission';
+
+	/// en: 'Bold'
+	String get carouselBold => 'Bold';
+
+	/// en: 'Italic'
+	String get carouselItalic => 'Italic';
+
+	/// en: 'Font size'
+	String get carouselSize => 'Font size';
+
+	/// en: 'Small'
+	String get carouselSmall => 'Small';
+
+	/// en: 'Standard'
+	String get carouselNormal => 'Standard';
+
+	/// en: 'Large'
+	String get carouselLarge => 'Large';
+
+	/// en: 'Bulleted list'
+	String get carouselBullet => 'Bulleted list';
+
+	/// en: 'Numbered list'
+	String get carouselOrdered => 'Numbered list';
+
+	/// en: 'Increase indent'
+	String get carouselIndent => 'Increase indent';
+
+	/// en: 'Decrease indent'
+	String get carouselOutdent => 'Decrease indent';
+
+	/// en: 'Open event link'
+	String get carouselOpenLink => 'Open event link';
+
+	/// en: 'Enlarge cover image'
+	String get carouselZoom => 'Enlarge cover image';
+
+	/// en: 'Pending announcements: ${count}'
+	String pendingAnnouncementCount({required Object count}) => 'Pending announcements: ${count}';
+
+	/// en: 'Sign in with Google'
+	String get announcementGoogleSignIn => 'Sign in with Google';
+
+	/// en: 'Sign in with Apple'
+	String get announcementAppleSignIn => 'Sign in with Apple';
+
+	/// en: 'New announcement'
+	String get addPublishedAnnouncement => 'New announcement';
+
+	/// en: 'Submissions'
+	String get announcementReviewQueue => 'Submissions';
+
+	/// en: 'Published'
+	String get publishedAnnouncements => 'Published';
+
+	/// en: 'Approve'
+	String get approveAnnouncement => 'Approve';
+
+	/// en: 'Reject'
+	String get rejectAnnouncement => 'Reject';
+
+	/// en: 'Applicant account copied'
+	String get announcementApplicantCopied => 'Applicant account copied';
+
+	/// en: 'Deadline ${date}'
+	String announcementDeadline({required Object date}) => 'Deadline ${date}';
+
+	/// en: 'More actions for ${title}'
+	String announcementItemActions({required Object title}) => 'More actions for ${title}';
+
+	/// en: 'Delete submission'
+	String get deleteReviewApplication => 'Delete submission';
+
+	/// en: 'Delete “${title}”?'
+	String confirmAnnouncementDeletion({required Object title}) => 'Delete “${title}”?';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -1918,6 +2044,48 @@ extension on ApLocalizations {
 			'unitCountFormat' => ({required Object arg1}) => '${arg1} Credits',
 			'midtermPrefix' => ({required Object arg1}) => 'Midterm: ${arg1}',
 			'noClassAlready' => 'No more classes today',
+			'announcementSubmissionSystem' => 'Homepage Carousel Submissions',
+			'carouselCover' => 'Carousel cover',
+			'carouselPick' => 'Choose cover image',
+			'carouselReplace' => 'Replace image',
+			'carouselImageRequired' => 'Upload a cover image to continue',
+			'carouselUploadFailed' => 'Upload failed. Choose the image again.',
+			'carouselDetails' => 'Event details',
+			'carouselLink' => 'Event link (optional)',
+			'carouselLinkError' => 'Enter a full https or http URL',
+			'carouselSetExpiry' => 'Set expiration',
+			'carouselNoExpiry' => 'No expiration',
+			'carouselExpired' => 'Choose a future expiration time',
+			'carouselBody' => 'Event description',
+			'carouselBodyHint' => 'Enter an event description…',
+			'carouselCheck' => 'Review',
+			'carouselSubmitFailed' => 'Your submission could not be sent. Please try again.',
+			'carouselPreview' => 'Review submission',
+			'carouselBold' => 'Bold',
+			'carouselItalic' => 'Italic',
+			'carouselSize' => 'Font size',
+			'carouselSmall' => 'Small',
+			'carouselNormal' => 'Standard',
+			'carouselLarge' => 'Large',
+			'carouselBullet' => 'Bulleted list',
+			'carouselOrdered' => 'Numbered list',
+			'carouselIndent' => 'Increase indent',
+			'carouselOutdent' => 'Decrease indent',
+			'carouselOpenLink' => 'Open event link',
+			'carouselZoom' => 'Enlarge cover image',
+			'pendingAnnouncementCount' => ({required Object count}) => 'Pending announcements: ${count}',
+			'announcementGoogleSignIn' => 'Sign in with Google',
+			'announcementAppleSignIn' => 'Sign in with Apple',
+			'addPublishedAnnouncement' => 'New announcement',
+			'announcementReviewQueue' => 'Submissions',
+			'publishedAnnouncements' => 'Published',
+			'approveAnnouncement' => 'Approve',
+			'rejectAnnouncement' => 'Reject',
+			'announcementApplicantCopied' => 'Applicant account copied',
+			'announcementDeadline' => ({required Object date}) => 'Deadline ${date}',
+			'announcementItemActions' => ({required Object title}) => 'More actions for ${title}',
+			'deleteReviewApplication' => 'Delete submission',
+			'confirmAnnouncementDeletion' => ({required Object title}) => 'Delete “${title}”?',
 			_ => null,
 		};
 	}

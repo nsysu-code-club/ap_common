@@ -506,6 +506,48 @@ class ApLocalizationsZhHantTw extends ApLocalizations with BaseTranslations<AppL
 	@override String unitCountFormat({required Object arg1}) => '${arg1} 學分';
 	@override String midtermPrefix({required Object arg1}) => '期中: ${arg1}';
 	@override String get noClassAlready => '今天已經沒有課了';
+	@override String get announcementSubmissionSystem => '首頁輪播投稿系統';
+	@override String get carouselCover => '輪播封面';
+	@override String get carouselPick => '選擇封面圖片';
+	@override String get carouselReplace => '更換圖片';
+	@override String get carouselImageRequired => '請先上傳封面圖片';
+	@override String get carouselUploadFailed => '圖片上傳失敗，請重新選擇圖片。';
+	@override String get carouselDetails => '活動資訊';
+	@override String get carouselLink => '活動連結（選填）';
+	@override String get carouselLinkError => '請輸入完整的 https 或 http 網址';
+	@override String get carouselSetExpiry => '設定到期時間';
+	@override String get carouselNoExpiry => '無到期時間';
+	@override String get carouselExpired => '請選擇未來的到期時間';
+	@override String get carouselBody => '活動說明';
+	@override String get carouselBodyHint => '輸入活動說明…';
+	@override String get carouselCheck => '檢查';
+	@override String get carouselSubmitFailed => '投稿未送出，請再試一次。';
+	@override String get carouselPreview => '檢查投稿';
+	@override String get carouselBold => '粗體';
+	@override String get carouselItalic => '斜體';
+	@override String get carouselSize => '字型大小';
+	@override String get carouselSmall => '小字';
+	@override String get carouselNormal => '標準';
+	@override String get carouselLarge => '大字';
+	@override String get carouselBullet => '項目符號';
+	@override String get carouselOrdered => '編號清單';
+	@override String get carouselIndent => '增加縮排';
+	@override String get carouselOutdent => '減少縮排';
+	@override String get carouselOpenLink => '開啟活動連結';
+	@override String get carouselZoom => '放大封面圖片';
+	@override String pendingAnnouncementCount({required Object count}) => '${count} 則未審查公告';
+	@override String get announcementGoogleSignIn => '使用 Google 登入';
+	@override String get announcementAppleSignIn => '使用 Apple 登入';
+	@override String get addPublishedAnnouncement => '新增公告';
+	@override String get announcementReviewQueue => '投稿審查';
+	@override String get publishedAnnouncements => '已發布公告';
+	@override String get approveAnnouncement => '核准';
+	@override String get rejectAnnouncement => '退回';
+	@override String get announcementApplicantCopied => '已複製投稿者帳號';
+	@override String announcementDeadline({required Object date}) => '截止日期 ${date}';
+	@override String announcementItemActions({required Object title}) => '「${title}」的更多操作';
+	@override String get deleteReviewApplication => '刪除投稿';
+	@override String confirmAnnouncementDeletion({required Object title}) => '確定要刪除「${title}」嗎？';
 }
 
 /// The flat map containing all translations for locale <zh-Hant-TW>.
@@ -983,6 +1025,48 @@ extension on ApLocalizationsZhHantTw {
 			'unitCountFormat' => ({required Object arg1}) => '${arg1} 學分',
 			'midtermPrefix' => ({required Object arg1}) => '期中: ${arg1}',
 			'noClassAlready' => '今天已經沒有課了',
+			'announcementSubmissionSystem' => '首頁輪播投稿系統',
+			'carouselCover' => '輪播封面',
+			'carouselPick' => '選擇封面圖片',
+			'carouselReplace' => '更換圖片',
+			'carouselImageRequired' => '請先上傳封面圖片',
+			'carouselUploadFailed' => '圖片上傳失敗，請重新選擇圖片。',
+			'carouselDetails' => '活動資訊',
+			'carouselLink' => '活動連結（選填）',
+			'carouselLinkError' => '請輸入完整的 https 或 http 網址',
+			'carouselSetExpiry' => '設定到期時間',
+			'carouselNoExpiry' => '無到期時間',
+			'carouselExpired' => '請選擇未來的到期時間',
+			'carouselBody' => '活動說明',
+			'carouselBodyHint' => '輸入活動說明…',
+			'carouselCheck' => '檢查',
+			'carouselSubmitFailed' => '投稿未送出，請再試一次。',
+			'carouselPreview' => '檢查投稿',
+			'carouselBold' => '粗體',
+			'carouselItalic' => '斜體',
+			'carouselSize' => '字型大小',
+			'carouselSmall' => '小字',
+			'carouselNormal' => '標準',
+			'carouselLarge' => '大字',
+			'carouselBullet' => '項目符號',
+			'carouselOrdered' => '編號清單',
+			'carouselIndent' => '增加縮排',
+			'carouselOutdent' => '減少縮排',
+			'carouselOpenLink' => '開啟活動連結',
+			'carouselZoom' => '放大封面圖片',
+			'pendingAnnouncementCount' => ({required Object count}) => '${count} 則未審查公告',
+			'announcementGoogleSignIn' => '使用 Google 登入',
+			'announcementAppleSignIn' => '使用 Apple 登入',
+			'addPublishedAnnouncement' => '新增公告',
+			'announcementReviewQueue' => '投稿審查',
+			'publishedAnnouncements' => '已發布公告',
+			'approveAnnouncement' => '核准',
+			'rejectAnnouncement' => '退回',
+			'announcementApplicantCopied' => '已複製投稿者帳號',
+			'announcementDeadline' => ({required Object date}) => '截止日期 ${date}',
+			'announcementItemActions' => ({required Object title}) => '「${title}」的更多操作',
+			'deleteReviewApplication' => '刪除投稿',
+			'confirmAnnouncementDeletion' => ({required Object title}) => '確定要刪除「${title}」嗎？',
 			_ => null,
 		};
 	}
