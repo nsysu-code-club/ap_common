@@ -74,6 +74,7 @@ class CourseSettings extends StatefulWidget {
   }) {
     return showModalBottomSheet<CoursePaletteTheme>(
       context: context,
+      useRootNavigator: true,
       backgroundColor: const Color(0x00000000),
       isScrollControlled: true,
       builder: (_) => CourseSettings(
@@ -100,8 +101,7 @@ class CourseSettings extends StatefulWidget {
   }
 
   @override
-  State<CourseSettings> createState() =>
-      _CourseSettingsState();
+  State<CourseSettings> createState() => _CourseSettingsState();
 }
 
 class _CourseSettingsState extends State<CourseSettings> {
@@ -133,10 +133,11 @@ class _CourseSettingsState extends State<CourseSettings> {
       maxChildSize: 0.9,
       expand: false,
       builder: (BuildContext context, ScrollController scrollController) {
-        return Container(
-          decoration: BoxDecoration(
-            color: colorScheme.surface,
-            borderRadius: const BorderRadius.vertical(
+        return Material(
+          color: colorScheme.surface,
+          clipBehavior: Clip.antiAlias,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
               top: Radius.circular(24),
             ),
           ),
@@ -148,7 +149,9 @@ class _CourseSettingsState extends State<CourseSettings> {
               Expanded(
                 child: SingleChildScrollView(
                   controller: scrollController,
-                  padding: const EdgeInsets.only(bottom: 12),
+                  padding: EdgeInsets.only(
+                    bottom: 12 + MediaQuery.viewPaddingOf(context).bottom,
+                  ),
                   child: SafeArea(
                     top: false,
                     child: Column(

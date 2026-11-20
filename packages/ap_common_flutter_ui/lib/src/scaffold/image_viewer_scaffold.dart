@@ -1,3 +1,4 @@
+import 'package:ap_common_flutter_ui/src/scaffold/ap_page_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -48,22 +49,20 @@ class _ImageViewerScaffoldState extends State<ImageViewerScaffold>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title ?? ''),
-        actions: widget.actions,
-        bottom: (widget.imageViewers.length > 1)
-            ? TabBar(
-                controller: _tabController,
-                tabs: <Tab>[
-                  for (final ImageViewer image in widget.imageViewers)
-                    Tab(
-                      text: image.title,
-                    ),
-                ],
-              )
-            : null,
-      ),
+    return ApPageScaffold(
+      title: Text(widget.title ?? ''),
+      actions: widget.actions ?? const <Widget>[],
+      bottom: (widget.imageViewers.length > 1)
+          ? TabBar(
+              controller: _tabController,
+              tabs: <Tab>[
+                for (final ImageViewer image in widget.imageViewers)
+                  Tab(
+                    text: image.title,
+                  ),
+              ],
+            )
+          : null,
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[

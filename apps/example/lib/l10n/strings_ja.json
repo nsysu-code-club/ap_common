@@ -110,5 +110,21 @@
   "getPendingNotificationList": "保留中の通知リスト（タップでキャンセル）",
   "cancelAll": "すべてキャンセル",
   "dialogUtilTest": "ダイアログテスト",
-  "localNotificationTest": "ローカル通知テスト"
+  "localNotificationTest": "ローカル通知テスト",
+  "newFeature": "新機能",
+  "latestAnnouncements": "最新のお知らせ",
+  "postAnnouncement": "投稿",
+  "loginCardTitle": "学務システムにログイン",
+  "loginCardSubtitle": "ログインして今日の時間割と成績を確認",
+  "campusServicesSection": "キャンパスサービス",
+  "appSection": "アプリケーション",
+  "schoolInfoSubtitle": "学内電話番号と年間行事予定",
+  "announcementReviewSubtitle": "学内イベントの投稿・審査管理",
+  "accountSheetTitle": "アカウントと設定",
+  "viewProfileHint": "プロフィールを表示・編集",
+  "busRoutesSection": "学内バス路線",
+  "courseNotLoaded": "時間割がまだ読み込まれていません。タップして表示",
+  "busDemoSubtitle": "サンプル路線と時刻表",
+  "tabMore": "キャンパス",
+  "tabBus": "バス"
 }

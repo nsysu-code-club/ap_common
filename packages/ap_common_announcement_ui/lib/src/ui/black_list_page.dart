@@ -32,10 +32,8 @@ class _BlackListPageState extends State<BlackListPage> {
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.ap.blackList),
-      ),
+    return ApPageScaffold(
+      title: Text(context.ap.blackList),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddDialog(colorScheme),
         child: const Icon(Icons.person_add_alt),
@@ -82,19 +80,27 @@ class _BlackListPageState extends State<BlackListPage> {
           ),
         DataLoaded<List<String>>(:final List<String> data) =>
           ListView.builder(
-            padding: const EdgeInsets.all(16),
+            padding: ApAppShell.contentPadding(context),
             itemCount: data.length,
             itemBuilder: (BuildContext context, int index) {
-              return _buildItem(colorScheme, data[index]);
+              return _buildItem(
+                colorScheme,
+                data[index],
+                isLast: index == data.length - 1,
+              );
             },
           ),
       },
     );
   }
 
-  Widget _buildItem(ColorScheme colorScheme, String username) {
+  Widget _buildItem(
+    ColorScheme colorScheme,
+    String username, {
+    bool isLast = false,
+  }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: EdgeInsets.only(bottom: isLast ? 0 : 8),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(12),

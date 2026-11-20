@@ -89,6 +89,7 @@ class ApUtils {
     final ApLocalizations app = context.ap;
     showModalBottomSheet<void>(
       context: context,
+      useRootNavigator: true,
       backgroundColor: const Color(0x00000000),
       isScrollControlled: true,
       builder: (BuildContext context) => Container(

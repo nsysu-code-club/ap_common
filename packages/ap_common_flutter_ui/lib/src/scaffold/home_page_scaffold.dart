@@ -99,7 +99,7 @@ class HomePageScaffold extends StatefulWidget {
   /// Indicates whether the user is currently logged in.
   final bool isLogin;
 
-  /// auto cycle for announcement carousel 
+  /// auto cycle for announcement carousel
   final bool autoPlay;
 
   /// The duration between automatic transitions in the carousel.
@@ -159,13 +159,9 @@ class HomePageScaffoldState extends State<HomePageScaffold> {
       },
       child: ScaffoldMessenger(
         key: _scaffoldMessengerKey,
-        child: Scaffold(
-          appBar: isTablet
-              ? null
-              : AppBar(
-                  title: Text(widget.title ?? ''),
-                  actions: widget.actions,
-                ),
+        child: ApPageScaffold(
+          title: isTablet ? null : Text(widget.title ?? ''),
+          actions: widget.actions ?? const <Widget>[],
           drawer: isTablet ? null : widget.drawer,
           floatingActionButton: widget.floatingActionButton,
           body: Row(
@@ -183,9 +179,17 @@ class HomePageScaffoldState extends State<HomePageScaffold> {
                               orientation == Orientation.portrait
                                   ? (hasDash ? 12.0 : 32.0)
                                   : 4.0;
+                          final double shellInset = _shellBottomInset;
+                          final bool scrollsVertically = widget.state ==
+                                  HomeState.finish &&
+                              hasDash &&
+                              (orientation == Orientation.portrait || isTablet);
                           return Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: vPad,
+                            padding: EdgeInsets.only(
+                              top: vPad,
+                              bottom: shellInset > 0 && scrollsVertically
+                                  ? 0
+                                  : vPad + shellInset,
                             ),
                             alignment: Alignment.center,
                             child: AnimatedSwitcher(
@@ -316,12 +320,12 @@ class HomePageScaffoldState extends State<HomePageScaffold> {
     }
 
     final double screenHeight = MediaQuery.of(context).size.height;
-    
+
     // Calculate available height by subtracting fixed UI heights:
     // - AppBar: 56, BottomNavigationBar: 56
     // - Status bar/SafeArea: 44, Extra margin/padding: 60
     final double available = screenHeight - 56 - 56 - 44 - 60;
-    
+
     // Allocate 60% of available height to carousel, bounded
     // between 240 and 600 for reasonable visual proportion.
     final double carouselH =
@@ -339,33 +343,47 @@ class HomePageScaffoldState extends State<HomePageScaffold> {
         ),
         SliverFillRemaining(
           hasScrollBody: false,
-          child: Column(
-            mainAxisAlignment:
-                isTablet ? MainAxisAlignment.center : MainAxisAlignment.end,
-            children: <Widget>[
-              const SizedBox(height: 8.0),
-              SizedBox(
-                height: carouselH,
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: _buildPageView(orientation),
-                    ),
-                    _buildAnnouncementTitle(),
-                    const SizedBox(height: 4),
-                    _buildPageIndicator(),
-                  ],
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: _shellBottomInset > 0
+                  ? _shellBottomInset + (isPortrait ? 12 : 4)
+                  : 0,
+            ),
+            child: Column(
+              mainAxisAlignment:
+                  isTablet ? MainAxisAlignment.center : MainAxisAlignment.end,
+              children: <Widget>[
+                const SizedBox(height: 8.0),
+                SizedBox(
+                  height: carouselH,
+                  child: Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: _buildPageView(orientation),
+                      ),
+                      _buildAnnouncementTitle(),
+                      const SizedBox(height: 4),
+                      _buildPageIndicator(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
     );
   }
 
+  // A local bottom bar already constrains this Scaffold's body. Reserve the
+  // shell overlay only when this page does not provide its own bottom bar.
+  double get _shellBottomInset =>
+      widget.bottomNavigationBarItems != null && !isTablet
+          ? 0
+          : ApAppShell.bottomInset(context);
+
   /// Builds the title widget for the current announcement.
-  /// 
+  ///
   /// Wraps the text in a [Hero] widget using
   /// [ApConstants.tagAnnouncementTitle] to support smooth
   /// transition animations when navigating to a detail page.
@@ -533,6 +551,7 @@ class HomePageScaffoldState extends State<HomePageScaffold> {
       ),
     );
   }
+
   /// Determines which layout to render based on state and orientation.
   ///
   /// Viewport Fraction Logic:

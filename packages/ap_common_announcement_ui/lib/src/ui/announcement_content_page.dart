@@ -30,14 +30,16 @@ class AnnouncementContentPageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.ap.announcements),
-      ),
+    return ApPageScaffold(
+      title: Text(context.ap.announcements),
       body: OrientationBuilder(
         builder: (_, Orientation orientation) {
           return orientation == Orientation.portrait
               ? SingleChildScrollView(
+                  padding: ApAppShell.contentPadding(
+                    context,
+                    spacing: const EdgeInsets.only(bottom: 16),
+                  ),
                   child: Column(
                     children: _renderContent(orientation),
                   ),
@@ -58,10 +60,8 @@ class AnnouncementContentPageState
       onTap: () {
         ApUtils.pushCupertinoStyle(
           context,
-          Scaffold(
-            appBar: AppBar(
-              title: Text(widget.announcement.title),
-            ),
+          ApPageScaffold(
+            title: Text(widget.announcement.title),
             body: PhotoView(
               imageProvider: (ApUtils.isSupportCacheNetworkImage
                       ? CachedNetworkImageProvider(
@@ -150,7 +150,6 @@ class AnnouncementContentPageState
           },
           child: Icon(ApIcon.exitToApp),
         ),
-        const SizedBox(height: 16.0),
       ],
     ];
     if (orientation == Orientation.portrait) {
@@ -167,6 +166,10 @@ class AnnouncementContentPageState
         const SizedBox(width: 32.0),
         Expanded(
           child: SingleChildScrollView(
+            padding: ApAppShell.contentPadding(
+              context,
+              spacing: const EdgeInsets.only(bottom: 16),
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: content,

@@ -106,7 +106,10 @@ class AnnouncementEditFormState extends State<AnnouncementEditForm> {
       child: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: ApAppShell.contentPadding(
+            context,
+            spacing: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          ),
           children: <Widget>[
             if (widget.mode == Mode.application) ...<Widget>[
               const SizedBox(height: 16),
@@ -192,7 +195,6 @@ class AnnouncementEditFormState extends State<AnnouncementEditForm> {
             ],
             const SizedBox(height: 32),
             _buildActionButtons(colorScheme),
-            const SizedBox(height: 36),
           ],
         ),
       ),

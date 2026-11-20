@@ -61,8 +61,9 @@ class LoginPageState extends State<LoginPage> {
           autofillHints: const <String>[AutofillHints.password],
         ),
         const SizedBox(height: 8.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 8,
           children: <Widget>[
             TextCheckBox(
               text: context.ap.autoLogin,

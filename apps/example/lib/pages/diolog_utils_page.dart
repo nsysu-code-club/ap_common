@@ -13,11 +13,13 @@ class _DialogUtilsTestPageState extends State<DialogUtilsTestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.app.dialogUtilTest),
-      ),
+    return ApPageScaffold(
+      title: Text(context.app.dialogUtilTest),
       body: ListView(
+        padding: ApAppShell.contentPadding(
+          context,
+          spacing: const EdgeInsets.only(bottom: 16),
+        ),
         children: <Widget>[
           const Padding(
             padding: EdgeInsets.all(8.0),

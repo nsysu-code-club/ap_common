@@ -68,10 +68,8 @@ class _AnnouncementEditPageState extends State<AnnouncementEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(pageTitle),
-      ),
+    return ApPageScaffold(
+      title: Text(pageTitle),
       body: AnnouncementEditForm(
         key: _formKey,
         mode: widget.mode,

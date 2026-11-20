@@ -34,6 +34,7 @@ class CoursePalettePickerSheet extends StatelessWidget {
   }) {
     return showModalBottomSheet<CoursePaletteTheme>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       useSafeArea: true,
       builder: (_) => CoursePalettePickerSheet(

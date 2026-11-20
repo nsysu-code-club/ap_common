@@ -2,12 +2,11 @@ import 'dart:developer';
 
 import 'package:ap_common/ap_common.dart'
     hide AppLocale, AppLocaleUtils, LocaleSettings, TranslationProvider;
+import 'package:ap_common_example/app_navigation.dart';
 import 'package:ap_common_example/config/constants.dart';
-import 'package:ap_common_example/pages/home_page.dart';
 import 'package:ap_common_example/utils/app_localizations.dart';
 import 'package:ap_common_example/widgets/share_data_widget.dart';
-import 'package:ap_common_flutter_core/ap_common_flutter_core.dart'
-    as ap_l10n;
+import 'package:ap_common_flutter_core/ap_common_flutter_core.dart' as ap_l10n;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -98,6 +97,12 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.didChangePlatformBrightness();
   }
 
+  ThemeData _platformTheme(ThemeData base) =>
+      base.platform == TargetPlatform.iOS ||
+              base.platform == TargetPlatform.macOS
+          ? AppleLiquidTheme.harmonize(base)
+          : base;
+
   @override
   Widget build(BuildContext context) {
     return ShareDataWidget(
@@ -114,29 +119,30 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
               child: TranslationProvider(
                 child: Builder(
                   builder: (BuildContext context) {
-                  return MaterialApp(
-                    onGenerateTitle: (BuildContext context) =>
-                        context.app.appName,
-                    debugShowCheckedModeBanner: false,
-                    routes: <String, WidgetBuilder>{
-                      Navigator.defaultRouteName: (BuildContext context) =>
-                          HomePage(),
-                      AboutUsPage.routerName: (BuildContext context) =>
-                          HomePageState.aboutPage(context),
-                      AnnouncementHomePage.routerName: (BuildContext context) =>
-                          const AnnouncementHomePage(),
-                    },
-                    theme: ApTheme.light(seedColor),
-                    darkTheme: ApTheme.dark(seedColor),
-                    themeMode: themeMode,
-                    locale: TranslationProvider.of(context).flutterLocale,
-                    supportedLocales: AppLocaleUtils.supportedLocales,
-                    localizationsDelegates:
-                        const <LocalizationsDelegate<dynamic>>[
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                    ],
+                    return MaterialApp(
+                      onGenerateTitle: (BuildContext context) =>
+                          context.app.appName,
+                      debugShowCheckedModeBanner: false,
+                      routes: <String, WidgetBuilder>{
+                        Navigator.defaultRouteName: (BuildContext context) =>
+                            const AppNavigation(),
+                        AboutUsPage.routerName: (BuildContext context) =>
+                            AppNavigation.aboutPage(context),
+                        AnnouncementHomePage.routerName:
+                            (BuildContext context) =>
+                                const AnnouncementHomePage(),
+                      },
+                      theme: _platformTheme(ApTheme.light(seedColor)),
+                      darkTheme: _platformTheme(ApTheme.dark(seedColor)),
+                      themeMode: themeMode,
+                      locale: TranslationProvider.of(context).flutterLocale,
+                      supportedLocales: AppLocaleUtils.supportedLocales,
+                      localizationsDelegates: const <LocalizationsDelegate<
+                          dynamic>>[
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
                     );
                   },
                 ),

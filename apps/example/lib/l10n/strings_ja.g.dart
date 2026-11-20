@@ -151,6 +151,22 @@ class AppLocalizationsJa extends AppLocalizations with BaseTranslations<AppLocal
 	@override String get cancelAll => 'すべてキャンセル';
 	@override String get dialogUtilTest => 'ダイアログテスト';
 	@override String get localNotificationTest => 'ローカル通知テスト';
+	@override String get newFeature => '新機能';
+	@override String get latestAnnouncements => '最新のお知らせ';
+	@override String get postAnnouncement => '投稿';
+	@override String get loginCardTitle => '学務システムにログイン';
+	@override String get loginCardSubtitle => 'ログインして今日の時間割と成績を確認';
+	@override String get campusServicesSection => 'キャンパスサービス';
+	@override String get appSection => 'アプリケーション';
+	@override String get schoolInfoSubtitle => '学内電話番号と年間行事予定';
+	@override String get announcementReviewSubtitle => '学内イベントの投稿・審査管理';
+	@override String get accountSheetTitle => 'アカウントと設定';
+	@override String get viewProfileHint => 'プロフィールを表示・編集';
+	@override String get busRoutesSection => '学内バス路線';
+	@override String get courseNotLoaded => '時間割がまだ読み込まれていません。タップして表示';
+	@override String get busDemoSubtitle => 'サンプル路線と時刻表';
+	@override String get tabMore => 'キャンパス';
+	@override String get tabBus => 'バス';
 }
 
 /// The flat map containing all translations for locale <ja>.
@@ -273,6 +289,22 @@ extension on AppLocalizationsJa {
 			'cancelAll' => 'すべてキャンセル',
 			'dialogUtilTest' => 'ダイアログテスト',
 			'localNotificationTest' => 'ローカル通知テスト',
+			'newFeature' => '新機能',
+			'latestAnnouncements' => '最新のお知らせ',
+			'postAnnouncement' => '投稿',
+			'loginCardTitle' => '学務システムにログイン',
+			'loginCardSubtitle' => 'ログインして今日の時間割と成績を確認',
+			'campusServicesSection' => 'キャンパスサービス',
+			'appSection' => 'アプリケーション',
+			'schoolInfoSubtitle' => '学内電話番号と年間行事予定',
+			'announcementReviewSubtitle' => '学内イベントの投稿・審査管理',
+			'accountSheetTitle' => 'アカウントと設定',
+			'viewProfileHint' => 'プロフィールを表示・編集',
+			'busRoutesSection' => '学内バス路線',
+			'courseNotLoaded' => '時間割がまだ読み込まれていません。タップして表示',
+			'busDemoSubtitle' => 'サンプル路線と時刻表',
+			'tabMore' => 'キャンパス',
+			'tabBus' => 'バス',
 			_ => null,
 		};
 	}

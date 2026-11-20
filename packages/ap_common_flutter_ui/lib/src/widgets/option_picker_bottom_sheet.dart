@@ -117,7 +117,7 @@ class OptionPickerBottomSheet extends StatelessWidget {
     this.defaultValue,
     this.defaultLabel,
     this.featureTag,
-  })  : groups = <PickerOptionGroup>[
+  }) : groups = <PickerOptionGroup>[
           PickerOptionGroup(options: options),
         ];
 
@@ -187,8 +187,7 @@ class OptionPickerBottomSheet extends StatelessWidget {
     int? defaultValue,
     String? defaultLabel,
   }) {
-    final ColorScheme colorScheme =
-        Theme.of(context).colorScheme;
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     // Precompute flat-index offset per group so that
     // options without an explicit value get a stable
@@ -202,6 +201,7 @@ class OptionPickerBottomSheet extends StatelessWidget {
 
     return showModalBottomSheet<int>(
       context: context,
+      useRootNavigator: true,
       backgroundColor: const Color(0x00000000),
       isScrollControlled: true,
       builder: (BuildContext sheetContext) {
@@ -216,8 +216,7 @@ class OptionPickerBottomSheet extends StatelessWidget {
             return Container(
               decoration: BoxDecoration(
                 color: colorScheme.surface,
-                borderRadius:
-                    const BorderRadius.vertical(
+                borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(24),
                 ),
               ),
@@ -231,15 +230,12 @@ class OptionPickerBottomSheet extends StatelessWidget {
                   ),
                   Divider(
                     height: 1,
-                    color: colorScheme
-                        .outlineVariant
-                        .withAlpha(128),
+                    color: colorScheme.outlineVariant.withAlpha(128),
                   ),
                   Expanded(
                     child: ListView.builder(
                       controller: scrollCtrl,
-                      padding: const EdgeInsets
-                          .symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 8,
                       ),
@@ -253,12 +249,9 @@ class OptionPickerBottomSheet extends StatelessWidget {
                           group: groups[gi],
                           flatOffset: offsets[gi],
                           colorScheme: colorScheme,
-                          selectedValue:
-                              selectedValue,
-                          defaultValue:
-                              defaultValue,
-                          defaultLabel:
-                              defaultLabel,
+                          selectedValue: selectedValue,
+                          defaultValue: defaultValue,
+                          defaultLabel: defaultLabel,
                         );
                       },
                     ),
@@ -274,10 +267,8 @@ class OptionPickerBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme cs =
-        Theme.of(context).colorScheme;
-    final String label =
-        _selectedLabel(groups, selectedValue);
+    final ColorScheme cs = Theme.of(context).colorScheme;
+    final String label = _selectedLabel(groups, selectedValue);
 
     return Material(
       color: cs.primaryContainer,
@@ -355,8 +346,7 @@ class OptionPickerBottomSheet extends StatelessWidget {
         flat++;
       }
     }
-    return groups.isNotEmpty &&
-            groups.first.options.isNotEmpty
+    return groups.isNotEmpty && groups.first.options.isNotEmpty
         ? groups.first.options.first.label
         : '';
   }
@@ -432,24 +422,20 @@ class OptionPickerBottomSheet extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: colorScheme
-                        .primaryContainer,
-                    borderRadius:
-                        BorderRadius.circular(8),
+                    color: colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     group.title!,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: colorScheme
-                          .onPrimaryContainer,
+                      color: colorScheme.onPrimaryContainer,
                     ),
                   ),
                 ),
@@ -457,15 +443,11 @@ class OptionPickerBottomSheet extends StatelessWidget {
               ],
             ),
           ),
-        for (int i = 0;
-            i < group.options.length;
-            i++)
+        for (int i = 0; i < group.options.length; i++)
           _buildItem(
             context: context,
             option: group.options[i],
-            effectiveValue:
-                group.options[i].value ??
-                    (flatOffset + i),
+            effectiveValue: group.options[i].value ?? (flatOffset + i),
             colorScheme: colorScheme,
             selectedValue: selectedValue,
             defaultValue: defaultValue,
@@ -484,10 +466,8 @@ class OptionPickerBottomSheet extends StatelessWidget {
     int? defaultValue,
     String? defaultLabel,
   }) {
-    final bool isSelected =
-        effectiveValue == selectedValue;
-    final bool isDefault =
-        effectiveValue == defaultValue;
+    final bool isSelected = effectiveValue == selectedValue;
+    final bool isDefault = effectiveValue == defaultValue;
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
@@ -499,8 +479,7 @@ class OptionPickerBottomSheet extends StatelessWidget {
         border: Border.all(
           color: isSelected
               ? colorScheme.primary
-              : colorScheme.outlineVariant
-                  .withAlpha(77),
+              : colorScheme.outlineVariant.withAlpha(77),
           width: isSelected ? 2 : 1,
         ),
       ),
@@ -535,9 +514,7 @@ class OptionPickerBottomSheet extends StatelessWidget {
                 ),
               ),
               Icon(
-                isSelected
-                    ? Icons.check_circle_rounded
-                    : Icons.circle_outlined,
+                isSelected ? Icons.check_circle_rounded : Icons.circle_outlined,
                 color: isSelected
                     ? colorScheme.primary
                     : colorScheme.outlineVariant,
@@ -560,8 +537,7 @@ class OptionPickerBottomSheet extends StatelessWidget {
       decoration: BoxDecoration(
         color: isSelected
             ? colorScheme.primary
-            : (option.iconBackgroundColor ??
-                colorScheme.primaryContainer),
+            : (option.iconBackgroundColor ?? colorScheme.primaryContainer),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
@@ -594,26 +570,22 @@ class OptionPickerBottomSheet extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: isSelected
-                      ? colorScheme.primary
-                      : colorScheme.onSurface,
+                  color:
+                      isSelected ? colorScheme.primary : colorScheme.onSurface,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            if (isDefault &&
-                defaultLabel != null) ...<Widget>[
+            if (isDefault && defaultLabel != null) ...<Widget>[
               const SizedBox(width: 8),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   horizontal: 8,
                   vertical: 2,
                 ),
                 decoration: BoxDecoration(
                   color: colorScheme.tertiary,
-                  borderRadius:
-                      BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
                   defaultLabel,

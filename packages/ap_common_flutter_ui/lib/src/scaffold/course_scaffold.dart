@@ -415,208 +415,215 @@ class CourseScaffoldState extends State<CourseScaffold> {
         showSectionTime: showSectionTime,
         showInstructors: showInstructors,
         showClassroomLocation: showClassroomLocation,
-        child: Scaffold(
-          appBar: AppBar(
-            centerTitle: false,
-            titleSpacing: 0,
-            title: Text(
-              widget.title ?? context.ap.course,
-              overflow: TextOverflow.ellipsis,
-            ),
-            actions: <Widget>[
-              ...widget.actions ?? <Widget>[],
-              if (widget.itemPicker != null) ...<Widget>[
-                widget.itemPicker!,
-                const SizedBox(width: 8),
-              ],
-              if (widget.semesterData != null &&
-                  widget.itemPicker == null) ...<Widget>[
-                SemesterPicker(
-                  semesterData: widget.semesterData!,
-                  currentIndex: widget.semesterData!.currentIndex,
-                  onSelect: (Semester semester, int index) {
-                    widget.onSelect?.call(index);
-                  },
-                  featureTag: 'course',
-                  controller: widget.semesterPickerController,
-                  uiConfig: widget.semesterPickerUiConfig,
-                ),
-                const SizedBox(width: 8),
-              ],
-              if (widget.enableCaptureCourseTable)
-                IconButton(
-                  icon: Icon(ApIcon.download),
-                  onPressed: _captureCourseTable,
-                  tooltip: context.ap.exportCourseTable,
-                ),
-              IconButton(
-                icon: Icon(ApIcon.menu),
-                onPressed: () async {
-                  final String currentId = _overridePalette?.id ??
-                      Theme.of(context).extension<CoursePaletteTheme>()?.id ??
-                      CoursePaletteTheme.material.id;
-                  final CoursePaletteTheme? picked = await CourseSettings.show(
-                    context: context,
-                    currentId: currentId,
-                    title: context.ap.courseColor,
-                    settingsTitle: context.ap.courseScaffoldSetting,
-                    showPaletteSelector: widget.enablePaletteSelector,
-                    showSettings: true,
-                    showSectionTime: showSectionTime,
-                    showInstructors: showInstructors,
-                    showClassroomLocation: showClassroomLocation,
-                    showSearchButton: showSearchButton,
-                    mergeCourse: mergeCourse,
-                    showSectionTimeOnChanged: (bool? value) {
-                      final bool next = value ?? false;
-                      setState(() => showSectionTime = next);
-                      PreferenceUtil.instance.setBool(
-                        ApConstants.showSectionTime,
-                        next,
-                      );
-                    },
-                    showInstructorsOnChanged: (bool? value) {
-                      final bool next = value ?? false;
-                      setState(() => showInstructors = next);
-                      PreferenceUtil.instance.setBool(
-                        ApConstants.showInstructors,
-                        next,
-                      );
-                    },
-                    showClassroomLocationOnChanged: (bool? value) {
-                      final bool next = value ?? false;
-                      setState(() => showClassroomLocation = next);
-                      PreferenceUtil.instance.setBool(
-                        ApConstants.showClassroomLocation,
-                        next,
-                      );
-                    },
-                    showSearchButtonOnChanged: (bool? value) {
-                      final bool next = value ?? false;
-                      setState(() => showSearchButton = next);
-                      PreferenceUtil.instance.setBool(
-                        ApConstants.showCourseSearchButton,
-                        next,
-                      );
-                    },
-                    mergeCourseOnChanged: (bool? value) {
-                      final bool next = value ?? false;
-                      setState(() => mergeCourse = next);
-                      PreferenceUtil.instance.setBool(
-                        '${ApConstants.packageName}.merge_course',
-                        next,
-                      );
-                    },
-                  );
-                  if (picked != null && picked.id != currentId) {
-                    await _applyPickedPalette(picked);
-                  }
-                  AnalyticsUtil.instance.logEvent('course_setting_click');
-                },
-                tooltip: context.ap.courseScaffoldSetting,
-              ),
+        child: ApPageScaffold.collapsing(
+          title: widget.title ?? context.ap.course,
+          controller: _scrollController,
+          actions: <Widget>[
+            ...widget.actions ?? <Widget>[],
+            if (widget.itemPicker != null) ...<Widget>[
+              widget.itemPicker!,
+              const SizedBox(width: 8),
             ],
-          ),
-          body: Row(
-            children: <Widget>[
-              Expanded(
-                flex: 3,
-                child: Flex(
-                  direction: Axis.vertical,
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    if (widget.customHint != null &&
-                        widget.customHint!.isNotEmpty)
-                      _buildHintBanner(),
+            if (widget.semesterData != null &&
+                widget.itemPicker == null) ...<Widget>[
+              SemesterPicker(
+                semesterData: widget.semesterData!,
+                currentIndex: widget.semesterData!.currentIndex,
+                onSelect: (Semester semester, int index) {
+                  widget.onSelect?.call(index);
+                },
+                featureTag: 'course',
+                controller: widget.semesterPickerController,
+                uiConfig: widget.semesterPickerUiConfig,
+              ),
+              const SizedBox(width: 8),
+            ],
+            if (widget.enableCaptureCourseTable)
+              IconButton(
+                icon: Icon(ApIcon.download, size: 24),
+                onPressed: _captureCourseTable,
+                tooltip: context.ap.exportCourseTable,
+              ),
+            IconButton(
+              icon: Icon(ApIcon.menu, size: 24),
+              onPressed: () async {
+                final String currentId = _overridePalette?.id ??
+                    Theme.of(context).extension<CoursePaletteTheme>()?.id ??
+                    CoursePaletteTheme.material.id;
+                final CoursePaletteTheme? picked = await CourseSettings.show(
+                  context: context,
+                  currentId: currentId,
+                  title: context.ap.courseColor,
+                  settingsTitle: context.ap.courseScaffoldSetting,
+                  showPaletteSelector: widget.enablePaletteSelector,
+                  showSettings: true,
+                  showSectionTime: showSectionTime,
+                  showInstructors: showInstructors,
+                  showClassroomLocation: showClassroomLocation,
+                  showSearchButton: showSearchButton,
+                  mergeCourse: mergeCourse,
+                  showSectionTimeOnChanged: (bool? value) {
+                    final bool next = value ?? false;
+                    setState(() => showSectionTime = next);
+                    PreferenceUtil.instance.setBool(
+                      ApConstants.showSectionTime,
+                      next,
+                    );
+                  },
+                  showInstructorsOnChanged: (bool? value) {
+                    final bool next = value ?? false;
+                    setState(() => showInstructors = next);
+                    PreferenceUtil.instance.setBool(
+                      ApConstants.showInstructors,
+                      next,
+                    );
+                  },
+                  showClassroomLocationOnChanged: (bool? value) {
+                    final bool next = value ?? false;
+                    setState(() => showClassroomLocation = next);
+                    PreferenceUtil.instance.setBool(
+                      ApConstants.showClassroomLocation,
+                      next,
+                    );
+                  },
+                  showSearchButtonOnChanged: (bool? value) {
+                    final bool next = value ?? false;
+                    setState(() => showSearchButton = next);
+                    PreferenceUtil.instance.setBool(
+                      ApConstants.showCourseSearchButton,
+                      next,
+                    );
+                  },
+                  mergeCourseOnChanged: (bool? value) {
+                    final bool next = value ?? false;
+                    setState(() => mergeCourse = next);
+                    PreferenceUtil.instance.setBool(
+                      '${ApConstants.packageName}.merge_course',
+                      next,
+                    );
+                  },
+                );
+                if (picked != null && picked.id != currentId) {
+                  await _applyPickedPalette(picked);
+                }
+                AnalyticsUtil.instance.logEvent('course_setting_click');
+              },
+              tooltip: context.ap.courseScaffoldSetting,
+            ),
+          ],
+          builder: (BuildContext context) => Scaffold(
+            body: Padding(
+              padding: EdgeInsets.only(
+                bottom: widget.state == CourseState.finish
+                    ? 0
+                    : ApAppShell.bottomInset(context),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 3,
+                    child: Flex(
+                      direction: Axis.vertical,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        if (widget.customHint != null &&
+                            widget.customHint!.isNotEmpty)
+                          _buildHintBanner(),
+                        Expanded(
+                          child: RefreshIndicator(
+                            onRefresh: () async {
+                              await widget.onRefresh!();
+                              AnalyticsUtil.instance.logEvent('course_refresh');
+                              return;
+                            },
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              child: KeyedSubtree(
+                                key: ValueKey<CourseState>(widget.state),
+                                child: _body(
+                                  PrimaryScrollController.maybeOf(context),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (widget.state == CourseState.finish &&
+                      isLandscape) ...<Widget>[
+                    const SizedBox(width: 16.0),
                     Expanded(
-                      child: RefreshIndicator(
-                        onRefresh: () async {
-                          await widget.onRefresh!();
-                          AnalyticsUtil.instance.logEvent('course_refresh');
-                          return;
-                        },
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 300),
-                          child: KeyedSubtree(
-                            key: ValueKey<CourseState>(widget.state),
-                            child: _body(),
+                      flex: 2,
+                      child: Material(
+                        elevation: 12.0,
+                        child: ColoredBox(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .surfaceContainerHighest,
+                          child: CourseList(
+                            courses: widget.courseData.courses,
+                            timeCodes: widget.courseData.timeCodes,
+                            invisibleCourseCodes: invisibleCourseCodes,
+                            getCourseColor: _getCourseColor,
+                            onVisibilityChanged: (
+                              Course course,
+                              bool visibility,
+                            ) =>
+                                saveInvisibleCourseCodes(
+                              course: course,
+                              visibility: visibility,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ],
-                ),
+                ],
               ),
-              if (widget.state == CourseState.finish &&
-                  isLandscape) ...<Widget>[
-                const SizedBox(width: 16.0),
-                Expanded(
-                  flex: 2,
-                  child: Material(
-                    elevation: 12.0,
-                    child: ColoredBox(
-                      color:
-                          Theme.of(context).colorScheme.surfaceContainerHighest,
-                      child: CourseList(
-                        courses: widget.courseData.courses,
-                        timeCodes: widget.courseData.timeCodes,
-                        invisibleCourseCodes: invisibleCourseCodes,
-                        getCourseColor: _getCourseColor,
-                        onVisibilityChanged: (
-                          Course course,
-                          bool visibility,
-                        ) =>
-                            saveInvisibleCourseCodes(
-                          course: course,
-                          visibility: visibility,
-                        ),
+            ),
+            floatingActionButton: AnimatedScale(
+              scale: _showFab ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 250),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  if (!isLandscape)
+                    FloatingActionButton(
+                      key:
+                          const ValueKey<String>('switch_content_style_button'),
+                      heroTag: 'switch_content_style_button',
+                      onPressed: () {
+                        setState(
+                          () => _contentStyle =
+                              (_contentStyle == _ContentStyle.table)
+                                  ? _ContentStyle.list
+                                  : _ContentStyle.table,
+                        );
+                      },
+                      child: Icon(
+                        _contentStyle == _ContentStyle.table
+                            ? Icons.list_rounded
+                            : Icons.grid_view_rounded,
                       ),
                     ),
-                  ),
-                ),
-              ],
-            ],
-          ),
-          floatingActionButton: AnimatedScale(
-            scale: _showFab ? 1.0 : 0.0,
-            duration: const Duration(milliseconds: 250),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                if (!isLandscape)
-                  FloatingActionButton(
-                    key: const ValueKey<String>('switch_content_style_button'),
-                    heroTag: 'switch_content_style_button',
-                    onPressed: () {
-                      setState(
-                        () => _contentStyle =
-                            (_contentStyle == _ContentStyle.table)
-                                ? _ContentStyle.list
-                                : _ContentStyle.table,
-                      );
-                    },
-                    child: Icon(
-                      _contentStyle == _ContentStyle.table
-                          ? Icons.list_rounded
-                          : Icons.grid_view_rounded,
+                  if (showSearchButton ?? true) ...<Widget>[
+                    if (!isLandscape) const SizedBox(height: 8),
+                    FloatingActionButton(
+                      key: const ValueKey<String>('search_button'),
+                      heroTag: 'search_button',
+                      onPressed: () {
+                        _pickSemester();
+                        AnalyticsUtil.instance
+                            .logEvent('course_search_button_click');
+                      },
+                      child: const Icon(Icons.search),
                     ),
-                  ),
-                if (showSearchButton ?? true) ...<Widget>[
-                  if (!isLandscape) const SizedBox(height: 8),
-                  FloatingActionButton(
-                    key: const ValueKey<String>('search_button'),
-                    heroTag: 'search_button',
-                    onPressed: () {
-                      _pickSemester();
-                      AnalyticsUtil.instance
-                          .logEvent('course_search_button_click');
-                    },
-                    child: const Icon(Icons.search),
-                  ),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),
@@ -689,7 +696,7 @@ class CourseScaffoldState extends State<CourseScaffold> {
     return HintBanner(text: widget.customHint!);
   }
 
-  Widget _body() {
+  Widget _body(ScrollController? controller) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     switch (widget.state) {
       case CourseState.loading:
@@ -736,11 +743,11 @@ class CourseScaffoldState extends State<CourseScaffold> {
         if (isLandscape || _contentStyle == _ContentStyle.table) {
           final int weekdayCount = widget.courseData.hasHoliday ? 7 : 5;
           return SingleChildScrollView(
-            controller: _scrollController,
+            controller: controller,
             physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.only(
-              top: 8.0,
-              bottom: 80.0,
+            padding: ApAppShell.contentPadding(
+              context,
+              spacing: const EdgeInsets.only(top: 16),
             ),
             child: RepaintBoundary(
               key: _repaintBoundaryGlobalKey,
@@ -761,7 +768,7 @@ class CourseScaffoldState extends State<CourseScaffold> {
           );
         } else {
           return CourseList(
-            controller: _scrollController,
+            controller: controller,
             courses: widget.courseData.courses,
             timeCodes: widget.courseData.timeCodes,
             invisibleCourseCodes: invisibleCourseCodes,
@@ -1260,6 +1267,7 @@ class CourseScaffoldState extends State<CourseScaffold> {
   void _onPressed(int weekday, TimeCode timeCode, Course course) {
     showModalBottomSheet<void>(
       context: context,
+      useRootNavigator: true,
       backgroundColor: const Color(0x00000000),
       isScrollControlled: true,
       builder: (BuildContext builder) {
@@ -1829,12 +1837,7 @@ class CourseList extends StatelessWidget {
     return ListView.builder(
       controller: controller,
       physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.only(
-        bottom: 80.0,
-        left: 16.0,
-        right: 16.0,
-        top: 16.0,
-      ),
+      padding: ApAppShell.contentPadding(context),
       itemCount: courses.length,
       itemBuilder: (_, int index) {
         final Course course = courses[index];
@@ -1844,7 +1847,9 @@ class CourseList extends StatelessWidget {
         final String instructors = course.getInstructors();
 
         return Container(
-          margin: const EdgeInsets.only(bottom: 12),
+          margin: EdgeInsets.only(
+            bottom: index == courses.length - 1 ? 0 : 12,
+          ),
           decoration: BoxDecoration(
             color: colorScheme.surfaceContainerLowest,
             borderRadius: BorderRadius.circular(16),
@@ -1856,6 +1861,7 @@ class CourseList extends StatelessWidget {
             onTap: () {
               showModalBottomSheet<void>(
                 context: context,
+                useRootNavigator: true,
                 backgroundColor: const Color(0x00000000),
                 isScrollControlled: true,
                 builder: (BuildContext sheetCtx) {

@@ -376,6 +376,54 @@ class AppLocalizations with BaseTranslations<AppLocale, AppLocalizations> {
 
 	/// en: 'Local Notification Test'
 	String get localNotificationTest => 'Local Notification Test';
+
+	/// en: 'New'
+	String get newFeature => 'New';
+
+	/// en: 'Latest Announcements'
+	String get latestAnnouncements => 'Latest Announcements';
+
+	/// en: 'Submit'
+	String get postAnnouncement => 'Submit';
+
+	/// en: 'Sign In to Campus Portal'
+	String get loginCardTitle => 'Sign In to Campus Portal';
+
+	/// en: 'Sign in to view today's schedule and semester grades'
+	String get loginCardSubtitle => 'Sign in to view today\'s schedule and semester grades';
+
+	/// en: 'Campus Services'
+	String get campusServicesSection => 'Campus Services';
+
+	/// en: 'Application'
+	String get appSection => 'Application';
+
+	/// en: 'Campus directory & academic calendar'
+	String get schoolInfoSubtitle => 'Campus directory & academic calendar';
+
+	/// en: 'Submit or manage campus announcements'
+	String get announcementReviewSubtitle => 'Submit or manage campus announcements';
+
+	/// en: 'Account & Settings'
+	String get accountSheetTitle => 'Account & Settings';
+
+	/// en: 'View and edit profile'
+	String get viewProfileHint => 'View and edit profile';
+
+	/// en: 'Campus Bus Routes'
+	String get busRoutesSection => 'Campus Bus Routes';
+
+	/// en: 'Timetable not loaded yet, tap to view'
+	String get courseNotLoaded => 'Timetable not loaded yet, tap to view';
+
+	/// en: 'Sample routes and departure times'
+	String get busDemoSubtitle => 'Sample routes and departure times';
+
+	/// en: 'Campus'
+	String get tabMore => 'Campus';
+
+	/// en: 'Bus'
+	String get tabBus => 'Bus';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -498,6 +546,22 @@ extension on AppLocalizations {
 			'cancelAll' => 'Cancel All',
 			'dialogUtilTest' => 'Dialog Util Test',
 			'localNotificationTest' => 'Local Notification Test',
+			'newFeature' => 'New',
+			'latestAnnouncements' => 'Latest Announcements',
+			'postAnnouncement' => 'Submit',
+			'loginCardTitle' => 'Sign In to Campus Portal',
+			'loginCardSubtitle' => 'Sign in to view today\'s schedule and semester grades',
+			'campusServicesSection' => 'Campus Services',
+			'appSection' => 'Application',
+			'schoolInfoSubtitle' => 'Campus directory & academic calendar',
+			'announcementReviewSubtitle' => 'Submit or manage campus announcements',
+			'accountSheetTitle' => 'Account & Settings',
+			'viewProfileHint' => 'View and edit profile',
+			'busRoutesSection' => 'Campus Bus Routes',
+			'courseNotLoaded' => 'Timetable not loaded yet, tap to view',
+			'busDemoSubtitle' => 'Sample routes and departure times',
+			'tabMore' => 'Campus',
+			'tabBus' => 'Bus',
 			_ => null,
 		};
 	}

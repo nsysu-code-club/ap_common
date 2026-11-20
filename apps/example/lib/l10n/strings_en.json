@@ -110,5 +110,21 @@
   "getPendingNotificationList": "Pending Notification List(Click to cancel)",
   "cancelAll": "Cancel All",
   "dialogUtilTest": "Dialog Util Test",
-  "localNotificationTest": "Local Notification Test"
+  "localNotificationTest": "Local Notification Test",
+  "newFeature": "New",
+  "latestAnnouncements": "Latest Announcements",
+  "postAnnouncement": "Submit",
+  "loginCardTitle": "Sign In to Campus Portal",
+  "loginCardSubtitle": "Sign in to view today's schedule and semester grades",
+  "campusServicesSection": "Campus Services",
+  "appSection": "Application",
+  "schoolInfoSubtitle": "Campus directory & academic calendar",
+  "announcementReviewSubtitle": "Submit or manage campus announcements",
+  "accountSheetTitle": "Account & Settings",
+  "viewProfileHint": "View and edit profile",
+  "busRoutesSection": "Campus Bus Routes",
+  "courseNotLoaded": "Timetable not loaded yet, tap to view",
+  "busDemoSubtitle": "Sample routes and departure times",
+  "tabMore": "Campus",
+  "tabBus": "Bus"
 }

@@ -50,10 +50,11 @@ class CourseEditSheet extends StatefulWidget {
     int? initialTimeIndex,
     CoursePaletteTheme? coursePalette,
   }) {
-    final CoursePaletteTheme? palette = coursePalette ??
-        Theme.of(context).extension<CoursePaletteTheme>();
+    final CoursePaletteTheme? palette =
+        coursePalette ?? Theme.of(context).extension<CoursePaletteTheme>();
     return showModalBottomSheet<Course>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       useSafeArea: true,
       builder: (BuildContext sheetCtx) {
@@ -66,14 +67,13 @@ class CourseEditSheet extends StatefulWidget {
         );
         if (palette == null) return sheet;
         final ThemeData sheetTheme = Theme.of(sheetCtx);
-        final List<ThemeExtension<dynamic>> merged = sheetTheme
-            .extensions.values
-            .where(
-              (ThemeExtension<dynamic> ext) =>
-                  ext is! CoursePaletteTheme,
-            )
-            .toList()
-          ..add(palette);
+        final List<ThemeExtension<dynamic>> merged =
+            sheetTheme.extensions.values
+                .where(
+                  (ThemeExtension<dynamic> ext) => ext is! CoursePaletteTheme,
+                )
+                .toList()
+              ..add(palette);
         return Theme(
           data: sheetTheme.copyWith(extensions: merged),
           child: sheet,
@@ -171,15 +171,12 @@ class _CourseEditSheetState extends State<CourseEditSheet> {
             children: <Widget>[
               _buildHandle(colorScheme),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        widget.isEditing
-                            ? ap.editCourse
-                            : ap.addCourse,
+                        widget.isEditing ? ap.editCourse : ap.addCourse,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -357,8 +354,8 @@ class _CourseEditSheetState extends State<CourseEditSheet> {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: palette.colors[i]
-                    .withAlpha(CoursePaletteTheme.cardAlpha),
+                color:
+                    palette.colors[i].withAlpha(CoursePaletteTheme.cardAlpha),
                 shape: BoxShape.circle,
                 border: selected
                     ? Border.all(
@@ -407,8 +404,7 @@ class _CourseEditSheetState extends State<CourseEditSheet> {
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         columnWidths: <int, TableColumnWidth>{
           0: const FixedColumnWidth(36),
-          for (int i = 1; i <= weekdayCount; i++)
-            i: const FlexColumnWidth(),
+          for (int i = 1; i <= weekdayCount; i++) i: const FlexColumnWidth(),
         },
         children: <TableRow>[
           // Header row
@@ -519,8 +515,7 @@ class _CourseEditSheetState extends State<CourseEditSheet> {
                           : occupiedBy,
                       style: TextStyle(
                         fontSize: 9,
-                        color: colorScheme.onSurfaceVariant
-                            .withAlpha(128),
+                        color: colorScheme.onSurfaceVariant.withAlpha(128),
                       ),
                       overflow: TextOverflow.clip,
                     ),
@@ -539,12 +534,8 @@ class _CourseEditSheetState extends State<CourseEditSheet> {
     bool hasError = false;
 
     setState(() {
-      _nameError = _nameCtrl.text.trim().isEmpty
-          ? ap.courseNameRequired
-          : null;
-      _timeError = _selectedSlots.isEmpty
-          ? ap.timeslotRequired
-          : null;
+      _nameError = _nameCtrl.text.trim().isEmpty ? ap.courseNameRequired : null;
+      _timeError = _selectedSlots.isEmpty ? ap.timeslotRequired : null;
       hasError = _nameError != null || _timeError != null;
     });
 
@@ -553,8 +544,7 @@ class _CourseEditSheetState extends State<CourseEditSheet> {
       return;
     }
 
-    final String code = widget.course?.code ??
-        CustomCourseData.generateCode();
+    final String code = widget.course?.code ?? CustomCourseData.generateCode();
 
     // Parse instructors from comma-separated string.
     final List<String> instructors = _instructorCtrl.text
@@ -565,16 +555,13 @@ class _CourseEditSheetState extends State<CourseEditSheet> {
 
     // Parse location.
     final String locText = _locationCtrl.text.trim();
-    final Location? location = locText.isEmpty
-        ? null
-        : Location(building: '', room: locText);
+    final Location? location =
+        locText.isEmpty ? null : Location(building: '', room: locText);
 
     final Course course = Course(
       code: code,
       title: _nameCtrl.text.trim(),
-      units: _unitsCtrl.text.trim().isEmpty
-          ? null
-          : _unitsCtrl.text.trim(),
+      units: _unitsCtrl.text.trim().isEmpty ? null : _unitsCtrl.text.trim(),
       times: _selectedSlots
           .map(
             ((int, int) s) => SectionTime(

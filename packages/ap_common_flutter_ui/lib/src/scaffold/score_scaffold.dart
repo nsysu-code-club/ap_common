@@ -144,119 +144,124 @@ class ScoreScaffoldState extends State<ScoreScaffold> {
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      backgroundColor: colorScheme.surface,
-      appBar: AppBar(
-        centerTitle: false,
-        titleSpacing: 0,
-        title: Text(
-          widget.title ?? context.ap.score,
-          overflow: TextOverflow.ellipsis,
-        ),
-        bottom: widget.bottom as PreferredSizeWidget?,
-        actions: <Widget>[
-          if (widget.itemPicker != null) ...<Widget>[
-            widget.itemPicker!,
-            const SizedBox(width: 12),
-          ],
-          if (widget.semesterData != null &&
-              widget.itemPicker == null) ...<Widget>[
-            SemesterPicker(
-              semesterData: widget.semesterData!,
-              currentIndex: widget.semesterData!.currentIndex,
-              onSelect: (Semester semester, int index) {
-                widget.onSelect?.call(index);
-              },
-              featureTag: 'score',
-              controller: widget.semesterPickerController,
-              uiConfig: widget.semesterPickerUiConfig,
-            ),
-            const SizedBox(width: 12),
-          ],
+    return ApPageScaffold.collapsing(
+      title: widget.title ?? context.ap.score,
+      controller: _scrollController,
+      bottom: widget.bottom as PreferredSizeWidget?,
+      actions: <Widget>[
+        if (widget.itemPicker != null) ...<Widget>[
+          widget.itemPicker!,
+          const SizedBox(width: 12),
         ],
-      ),
-      floatingActionButton: AnimatedScale(
-        scale: _showFab ? 1.0 : 0.0,
-        duration: const Duration(milliseconds: 250),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            if (widget.state == ScoreState.finish &&
-                widget.scoreData != null &&
-                widget.scoreData!.scores.isNotEmpty &&
-                !isLandscape)
-              FloatingActionButton(
-                key: const ValueKey<String>('switch_view_button'),
-                heroTag: 'switch_view_button',
-                onPressed: () {
-                  HapticFeedback.selectionClick();
-                  setState(() => _isAnalysisView = !_isAnalysisView);
-                },
-                child: Icon(
-                  _isAnalysisView
-                      ? Icons.list_alt_rounded
-                      : Icons.analytics_outlined,
-                ),
-              ),
-            if (widget.isShowSearchButton) ...<Widget>[
+        if (widget.semesterData != null &&
+            widget.itemPicker == null) ...<Widget>[
+          SemesterPicker(
+            semesterData: widget.semesterData!,
+            currentIndex: widget.semesterData!.currentIndex,
+            onSelect: (Semester semester, int index) {
+              widget.onSelect?.call(index);
+            },
+            featureTag: 'score',
+            controller: widget.semesterPickerController,
+            uiConfig: widget.semesterPickerUiConfig,
+          ),
+          const SizedBox(width: 12),
+        ],
+      ],
+      builder: (BuildContext context) => Scaffold(
+        floatingActionButton: AnimatedScale(
+          scale: _showFab ? 1.0 : 0.0,
+          duration: const Duration(milliseconds: 250),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
               if (widget.state == ScoreState.finish &&
                   widget.scoreData != null &&
                   widget.scoreData!.scores.isNotEmpty &&
                   !isLandscape)
-                const SizedBox(height: 8),
-              FloatingActionButton(
-                key: const ValueKey<String>('search_button'),
-                heroTag: 'search_button',
-                onPressed: () {
-                  _pickSemester();
-                  AnalyticsUtil.instance.logEvent('score_search_button_click');
-                },
-                child: const Icon(Icons.search),
-              ),
+                FloatingActionButton(
+                  key: const ValueKey<String>('switch_view_button'),
+                  heroTag: 'switch_view_button',
+                  onPressed: () {
+                    HapticFeedback.selectionClick();
+                    setState(() => _isAnalysisView = !_isAnalysisView);
+                  },
+                  child: Icon(
+                    _isAnalysisView
+                        ? Icons.list_alt_rounded
+                        : Icons.analytics_outlined,
+                  ),
+                ),
+              if (widget.isShowSearchButton) ...<Widget>[
+                if (widget.state == ScoreState.finish &&
+                    widget.scoreData != null &&
+                    widget.scoreData!.scores.isNotEmpty &&
+                    !isLandscape)
+                  const SizedBox(height: 8),
+                FloatingActionButton(
+                  key: const ValueKey<String>('search_button'),
+                  heroTag: 'search_button',
+                  onPressed: () {
+                    _pickSemester();
+                    AnalyticsUtil.instance
+                        .logEvent('score_search_button_click');
+                  },
+                  child: const Icon(Icons.search),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
-      ),
-      body: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 3,
-            child: Column(
-              children: <Widget>[
-                if (widget.customHint != null && widget.customHint!.isNotEmpty)
-                  _buildHintBanner(),
+        body: Padding(
+          padding: EdgeInsets.only(
+            bottom: widget.state == ScoreState.finish
+                ? 0
+                : ApAppShell.bottomInset(context),
+          ),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                flex: 3,
+                child: Column(
+                  children: <Widget>[
+                    if (widget.customHint != null &&
+                        widget.customHint!.isNotEmpty)
+                      _buildHintBanner(),
+                    Expanded(
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        child: _buildContent(context, colorScheme),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (widget.state == ScoreState.finish && isLandscape) ...<Widget>[
+                const SizedBox(width: 16.0),
                 Expanded(
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    child: _buildContent(context, colorScheme),
+                  flex: 2,
+                  child: Material(
+                    elevation: 12.0,
+                    child: ColoredBox(
+                      color:
+                          Theme.of(context).colorScheme.surfaceContainerHighest,
+                      child: _ScoreListTab(
+                        scoreData: widget.scoreData!,
+                        onRefresh: widget.onRefresh,
+                        middleTitle: widget.middleTitle,
+                        finalTitle: widget.finalTitle,
+                        onScoreSelect: widget.onScoreSelect,
+                        middleScoreBuilder: widget.middleScoreBuilder,
+                        finalScoreBuilder: widget.finalScoreBuilder,
+                      ),
+                    ),
                   ),
                 ),
               ],
-            ),
+            ],
           ),
-          if (widget.state == ScoreState.finish && isLandscape) ...<Widget>[
-            const SizedBox(width: 16.0),
-            Expanded(
-              flex: 2,
-              child: Material(
-                elevation: 12.0,
-                child: ColoredBox(
-                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  child: _ScoreListTab(
-                    scoreData: widget.scoreData!,
-                    onRefresh: widget.onRefresh,
-                    middleTitle: widget.middleTitle,
-                    finalTitle: widget.finalTitle,
-                    onScoreSelect: widget.onScoreSelect,
-                    middleScoreBuilder: widget.middleScoreBuilder,
-                    finalScoreBuilder: widget.finalScoreBuilder,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ],
+        ),
       ),
     );
   }
@@ -336,7 +341,7 @@ class ScoreScaffoldState extends State<ScoreScaffold> {
           middleScoreBuilder: widget.middleScoreBuilder,
           finalScoreBuilder: widget.finalScoreBuilder,
           isAnalysisView: isLandscape || _isAnalysisView,
-          scrollController: _scrollController,
+          scrollController: PrimaryScrollController.maybeOf(context),
           showPRCard: widget.showPRCard,
         );
     }
@@ -516,7 +521,7 @@ class _ScoreListTab extends StatelessWidget {
       child: ListView.builder(
         controller: controller,
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(16),
+        padding: ApAppShell.contentPadding(context),
         itemCount: scoreData.scores.length,
         itemBuilder: (BuildContext context, int index) {
           return _buildScoreItem(
@@ -567,7 +572,9 @@ class _ScoreListTab extends StatelessWidget {
               AnalyticsUtil.instance.logEvent('score_title_click');
             },
       child: Container(
-        margin: const EdgeInsets.only(bottom: 8),
+        margin: EdgeInsets.only(
+          bottom: index == scoreData.scores.length - 1 ? 0 : 8,
+        ),
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerLowest,
           borderRadius: BorderRadius.circular(16),
@@ -783,7 +790,7 @@ class _ScoreAnalysisTab extends StatelessWidget {
       child: SingleChildScrollView(
         controller: controller,
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(16),
+        padding: ApAppShell.contentPadding(context),
         child: Column(
           children: <Widget>[
             _buildMainSummaryCard(colorScheme, context.ap, analysis),
@@ -799,7 +806,6 @@ class _ScoreAnalysisTab extends StatelessWidget {
             ScoreDistributionCard(analysis: analysis),
             const SizedBox(height: 16),
             ScoreCreditSummaryCard(analysis: analysis),
-            const SizedBox(height: 32),
           ],
         ),
       ),

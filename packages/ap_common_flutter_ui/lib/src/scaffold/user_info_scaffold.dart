@@ -53,7 +53,39 @@ class UserInfoScaffoldState extends State<UserInfoScaffold> {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
+    return ApPageScaffold(
+      title: Text(context.ap.userInfo),
+      actions: <Widget>[
+        ...widget.actions ?? <Widget>[],
+        if (widget.enableBarCode)
+          IconButton(
+            icon: Image.asset(
+              iconName,
+              height: 24.0,
+              width: 24.0,
+            ),
+            onPressed: () {
+              setState(
+                () => codeMode = BarCodeMode
+                    .values[(codeMode.index + 1) % BarCodeMode.values.length],
+              );
+              AnalyticsUtil.instance.logEvent('user_info_barcode_switch');
+            },
+          ),
+        IconButton(
+          icon: _isRefreshing
+              ? SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: colorScheme.onSurface,
+                  ),
+                )
+                  : const Icon(Icons.refresh_rounded),
+          onPressed: _isRefreshing ? null : _handleRefresh,
+        ),
+      ],
       body: RefreshIndicator(
         onRefresh: () async {
           await _handleRefresh();
@@ -62,91 +94,24 @@ class UserInfoScaffoldState extends State<UserInfoScaffold> {
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: <Widget>[
-            SliverAppBar(
-              expandedHeight: 200,
-              pinned: true,
-              foregroundColor:
-                  isDark ? colorScheme.onSurface : colorScheme.onPrimary,
-              iconTheme: IconThemeData(
-                color: isDark ? colorScheme.onSurface : colorScheme.onPrimary,
-              ),
-              flexibleSpace: FlexibleSpaceBar(
-                background: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: isDark
-                          ? <Color>[
-                              colorScheme.primaryContainer,
-                              colorScheme.surface,
-                            ]
-                          : <Color>[
-                              colorScheme.primary,
-                              colorScheme.primaryContainer,
-                            ],
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  children: <Widget>[
+                    _buildAvatar(colorScheme, isDark),
+                    const SizedBox(height: 12),
+                    Text(
+                      widget.userInfo.name ?? '',
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                  ),
-                  child: SafeArea(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const SizedBox(height: 40),
-                        _buildAvatar(colorScheme, isDark),
-                        const SizedBox(height: 12),
-                        Text(
-                          widget.userInfo.name ?? '',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: isDark
-                                ? colorScheme.onSurface
-                                : colorScheme.onPrimary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  ],
                 ),
               ),
-              actions: <Widget>[
-                ...widget.actions ?? <Widget>[],
-                if (widget.enableBarCode)
-                  IconButton(
-                    icon: Image.asset(
-                      iconName,
-                      height: 24.0,
-                      width: 24.0,
-                    ),
-                    onPressed: () {
-                      setState(
-                        () => codeMode = BarCodeMode.values[
-                            (codeMode.index + 1) % BarCodeMode.values.length],
-                      );
-                      AnalyticsUtil.instance
-                          .logEvent('user_info_barcode_switch');
-                    },
-                  ),
-                IconButton(
-                  icon: _isRefreshing
-                      ? SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: isDark
-                                ? colorScheme.onSurface
-                                : colorScheme.onPrimary,
-                          ),
-                        )
-                      : const Icon(Icons.refresh_rounded),
-                  onPressed: _isRefreshing ? null : _handleRefresh,
-                ),
-              ],
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: ApAppShell.contentPadding(context),
                 child: Column(
                   children: <Widget>[
                     _buildInfoCard(colorScheme),

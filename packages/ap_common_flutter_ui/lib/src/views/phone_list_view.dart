@@ -97,11 +97,16 @@ class PhoneListViewState extends State<PhoneListView>
                   ),
                 ],
               ),
+            SliverPadding(
+              padding: ApAppShell.contentPadding(
+                context,
+                spacing: const EdgeInsets.only(bottom: 8),
+              ),
+            ),
           ],
         );
     }
   }
-
 }
 
 class HeaderDelegate extends SliverPersistentHeaderDelegate {

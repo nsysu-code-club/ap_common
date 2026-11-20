@@ -4,7 +4,6 @@ import 'package:ap_common/ap_common.dart';
 import 'package:ap_common_example/utils/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-
 class NotificationUtilsTestPage extends StatefulWidget {
   @override
   _NotificationUtilsTestPageState createState() =>
@@ -17,11 +16,13 @@ class _NotificationUtilsTestPageState extends State<NotificationUtilsTestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.app.localNotificationTest),
-      ),
+    return ApPageScaffold(
+      title: Text(context.app.localNotificationTest),
       body: ListView(
+        padding: ApAppShell.contentPadding(
+          context,
+          spacing: const EdgeInsets.only(bottom: 16),
+        ),
         children: <Widget>[
           const Padding(
             padding: EdgeInsets.all(8.0),

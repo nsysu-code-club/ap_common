@@ -1,3 +1,5 @@
+import 'package:ap_common_flutter_ui/src/scaffold/ap_app_shell.dart';
+import 'package:ap_common_flutter_ui/src/scaffold/ap_page_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
@@ -40,18 +42,9 @@ class LoginScaffoldState extends State<LoginScaffold> {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
+    return ApPageScaffold(
       resizeToAvoidBottomInset: orientation == Orientation.portrait,
-      extendBodyBehindAppBar: true,
-      appBar: widget.appBarTitle != null
-          ? AppBar(
-              title: Text(widget.appBarTitle!),
-              backgroundColor: Colors.transparent,
-              foregroundColor:
-                  isDark ? colorScheme.onSurface : colorScheme.onPrimary,
-              elevation: 0,
-            )
-          : null,
+      title: widget.appBarTitle == null ? null : Text(widget.appBarTitle!),
       body: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -71,11 +64,12 @@ class LoginScaffoldState extends State<LoginScaffold> {
         child: AutofillGroup(
           child: KeyboardDismissOnTap(
             child: SafeArea(
+              bottom: false,
               child: Center(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24.0,
-                    vertical: 32.0,
+                  padding: ApAppShell.contentPadding(
+                    context,
+                    spacing: const EdgeInsets.fromLTRB(24, 32, 24, 16),
                   ),
                   child: orientation == Orientation.portrait
                       ? Column(
@@ -215,9 +209,7 @@ class TextCheckBox extends StatelessWidget {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return MergeSemantics(
       child: InkWell(
-        onTap: (onChanged == null)
-            ? null
-            : () => onChanged?.call(!value),
+        onTap: (onChanged == null) ? null : () => onChanged?.call(!value),
         borderRadius: BorderRadius.circular(8),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),

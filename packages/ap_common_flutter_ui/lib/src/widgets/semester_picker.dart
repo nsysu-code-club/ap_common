@@ -148,6 +148,7 @@ class SemesterPicker extends StatefulWidget {
     VoidCallback? onControllerChanged;
     showModalBottomSheet<void>(
       context: context,
+      useRootNavigator: true,
       backgroundColor: const Color(0x00000000),
       isScrollControlled: true,
       builder: (BuildContext sheetContext) {
@@ -167,10 +168,11 @@ class SemesterPicker extends StatefulWidget {
               expand: false,
               builder:
                   (BuildContext context, ScrollController scrollController) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: colorScheme.surface,
-                    borderRadius: const BorderRadius.vertical(
+                return Material(
+                  color: colorScheme.surface,
+                  clipBehavior: Clip.antiAlias,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
                       top: Radius.circular(24),
                     ),
                   ),
@@ -216,9 +218,11 @@ class SemesterPicker extends StatefulWidget {
                       Expanded(
                         child: ListView.builder(
                           controller: scrollController,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8,
+                          padding: EdgeInsets.fromLTRB(
+                            16,
+                            8,
+                            16,
+                            8 + MediaQuery.viewPaddingOf(context).bottom,
                           ),
                           itemCount: groupedByYear.length,
                           itemBuilder: (BuildContext context, int groupIndex) {

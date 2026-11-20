@@ -54,31 +54,35 @@ class _PdfViewState extends State<PdfView> {
             },
             useActions: false,
           ),
-          floatingActionButton: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              FloatingActionButton(
-                onPressed: () async {
-                  AnalyticsUtil.instance.logEvent('export_by_share');
-                  await Printing.sharePdf(
-                    bytes: widget.data!,
-                    filename: '${widget.fileName ?? 'export'}.pdf',
-                  );
-                },
-                child: Icon(ApIcon.share),
-              ),
-              const SizedBox(height: 16.0),
-              FloatingActionButton(
-                onPressed: () async {
-                  AnalyticsUtil.instance.logEvent('export_by_printing');
-                  await Printing.layoutPdf(
-                    name: widget.fileName ?? 'export',
-                    onLayout: (PdfPageFormat format) => widget.data!,
-                  );
-                },
-                child: Icon(ApIcon.print),
-              ),
-            ],
+          floatingActionButton: Padding(
+            padding: EdgeInsets.only(bottom: ApAppShell.bottomInset(context)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                FloatingActionButton(
+                  onPressed: () async {
+                    AnalyticsUtil.instance.logEvent('export_by_share');
+                    await Printing.sharePdf(
+                      bytes: widget.data!,
+                      filename: '${widget.fileName ?? 'export'}.pdf',
+                    );
+                  },
+                  child: Icon(ApIcon.share),
+                ),
+                const SizedBox(height: 16.0),
+                FloatingActionButton(
+                  onPressed: () async {
+                    AnalyticsUtil.instance.logEvent('export_by_printing');
+                    await Printing.layoutPdf(
+                      name: widget.fileName ?? 'export',
+                      onLayout: (PdfPageFormat format) => widget.data!,
+                    );
+                  },
+                  child: Icon(ApIcon.print),
+                ),
+              ],
+            ),
           ),
         );
     }
@@ -90,8 +94,7 @@ class _PdfViewState extends State<PdfView> {
         },
         child: HintContent(
           icon: ApIcon.error,
-          content:
-              widget.errorMessage ?? context.ap.clickToRetry,
+          content: widget.errorMessage ?? context.ap.clickToRetry,
         ),
       );
 }

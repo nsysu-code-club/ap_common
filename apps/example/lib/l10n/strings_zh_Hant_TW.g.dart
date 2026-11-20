@@ -154,6 +154,22 @@ class AppLocalizationsZhHantTw extends AppLocalizations with BaseTranslations<Ap
 	@override String get getPendingNotificationList => '等待通知列表(點擊可取消)';
 	@override String get cancelAll => '取消全部';
 	@override String get dialogUtilTest => '對話框測試';
+	@override String get newFeature => '新功能';
+	@override String get latestAnnouncements => '最新公告';
+	@override String get postAnnouncement => '投稿';
+	@override String get loginCardTitle => '登入校務系統';
+	@override String get loginCardSubtitle => '登入後查看今日課表與學期成績';
+	@override String get campusServicesSection => '校園服務';
+	@override String get appSection => '應用程式';
+	@override String get schoolInfoSubtitle => '查詢校園常用電話與年度行事曆';
+	@override String get announcementReviewSubtitle => '投稿校園活動宣傳或管理審核';
+	@override String get accountSheetTitle => '帳號與設定';
+	@override String get viewProfileHint => '查看與編輯個人資料';
+	@override String get busRoutesSection => '校園公車路線';
+	@override String get courseNotLoaded => '尚未載入課表，點擊查看';
+	@override String get busDemoSubtitle => '範例路線與發車時間';
+	@override String get tabMore => '校園';
+	@override String get tabBus => '校車';
 }
 
 /// The flat map containing all translations for locale <zh-Hant-TW>.
@@ -279,6 +295,22 @@ extension on AppLocalizationsZhHantTw {
 			'getPendingNotificationList' => '等待通知列表(點擊可取消)',
 			'cancelAll' => '取消全部',
 			'dialogUtilTest' => '對話框測試',
+			'newFeature' => '新功能',
+			'latestAnnouncements' => '最新公告',
+			'postAnnouncement' => '投稿',
+			'loginCardTitle' => '登入校務系統',
+			'loginCardSubtitle' => '登入後查看今日課表與學期成績',
+			'campusServicesSection' => '校園服務',
+			'appSection' => '應用程式',
+			'schoolInfoSubtitle' => '查詢校園常用電話與年度行事曆',
+			'announcementReviewSubtitle' => '投稿校園活動宣傳或管理審核',
+			'accountSheetTitle' => '帳號與設定',
+			'viewProfileHint' => '查看與編輯個人資料',
+			'busRoutesSection' => '校園公車路線',
+			'courseNotLoaded' => '尚未載入課表，點擊查看',
+			'busDemoSubtitle' => '範例路線與發車時間',
+			'tabMore' => '校園',
+			'tabBus' => '校車',
 			_ => null,
 		};
 	}

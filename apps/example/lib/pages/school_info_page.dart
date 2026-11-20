@@ -56,8 +56,6 @@ class SchoolInfoPageState extends State<SchoolInfoPage>
 
   TabController? controller;
 
-  int _currentIndex = 0;
-
   Uint8List? data;
 
   @override
@@ -80,9 +78,15 @@ class SchoolInfoPageState extends State<SchoolInfoPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.ap.schoolInfo),
+    return ApPageScaffold(
+      title: Text(context.ap.schoolInfo),
+      bottom: TabBar(
+        controller: controller,
+        tabs: <Widget>[
+          Tab(icon: Icon(ApIcon.fiberNew), text: context.ap.notifications),
+          Tab(icon: Icon(ApIcon.phone), text: context.ap.phones),
+          Tab(icon: Icon(ApIcon.dateRange), text: context.ap.events),
+        ],
       ),
       body: TabBarView(
         controller: controller,
@@ -110,29 +114,6 @@ class SchoolInfoPageState extends State<SchoolInfoPage>
             state: pdfState,
             onRefresh: () => _getSchedules(),
             data: data,
-          ),
-        ],
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (int index) {
-          setState(() {
-            _currentIndex = index;
-            controller!.animateTo(_currentIndex);
-          });
-        },
-        destinations: <NavigationDestination>[
-          NavigationDestination(
-            icon: Icon(ApIcon.fiberNew),
-            label: context.ap.notifications,
-          ),
-          NavigationDestination(
-            icon: Icon(ApIcon.phone),
-            label: context.ap.phones,
-          ),
-          NavigationDestination(
-            icon: Icon(ApIcon.dateRange),
-            label: context.ap.events,
           ),
         ],
       ),

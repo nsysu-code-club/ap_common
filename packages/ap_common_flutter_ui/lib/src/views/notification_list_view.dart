@@ -79,6 +79,10 @@ class NotificationListViewState extends State<NotificationListView>
         return RefreshIndicator(
           onRefresh: widget.onRefresh,
           child: ListView.builder(
+            padding: ApAppShell.contentPadding(
+              context,
+              spacing: const EdgeInsets.only(bottom: 16),
+            ),
             controller: controller,
             itemBuilder: (BuildContext context, int index) {
               return NotificationItem(

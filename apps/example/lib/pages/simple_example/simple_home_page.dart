@@ -12,25 +12,23 @@ class SimpleHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ApLocalizations ap = context.ap;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Simple Example'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.brightness_6),
-            onPressed: () {
-              final ApAppState state = ApApp.of(context);
-              state.setThemeMode(
-                state.themeMode == ThemeMode.dark
-                    ? ThemeMode.light
-                    : ThemeMode.dark,
-              );
-            },
-          ),
-        ],
-      ),
+    return ApPageScaffold(
+      title: const Text('Simple Example'),
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.brightness_6),
+          onPressed: () {
+            final ApAppState state = ApApp.of(context);
+            state.setThemeMode(
+              state.themeMode == ThemeMode.dark
+                  ? ThemeMode.light
+                  : ThemeMode.dark,
+            );
+          },
+        ),
+      ],
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: ApAppShell.contentPadding(context),
         children: <Widget>[
           _buildCard(
             context,

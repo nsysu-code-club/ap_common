@@ -112,20 +112,18 @@ class _AnnouncementHomePageState extends State<AnnouncementHomePage>
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.ap.announcementReviewSystem),
-        actions: _buildAppBarActions(colorScheme),
-        bottom: _isLoggedIn && _isAdmin
-            ? TabBar(
-                controller: _tabController,
-                tabs: <Tab>[
-                  Tab(text: context.ap.allApplications),
-                  Tab(text: context.ap.allAnnouncements),
-                ],
-              )
-            : null,
-      ),
+    return ApPageScaffold(
+      title: Text(context.ap.announcementReviewSystem),
+      actions: _buildAppBarActions(colorScheme),
+      bottom: _isLoggedIn && _isAdmin
+          ? TabBar(
+              controller: _tabController,
+              tabs: <Tab>[
+                Tab(text: context.ap.allApplications),
+                Tab(text: context.ap.allAnnouncements),
+              ],
+            )
+          : null,
       floatingActionButton: _buildFab(),
       body: _isLoggedIn
           ? RefreshIndicator(
@@ -242,7 +240,7 @@ class _AnnouncementHomePageState extends State<AnnouncementHomePage>
     };
 
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: ApAppShell.contentPadding(context),
       itemCount: filtered.length + 2,
       itemBuilder: (BuildContext context, int index) {
         if (index == 0) {
@@ -255,6 +253,7 @@ class _AnnouncementHomePageState extends State<AnnouncementHomePage>
           colorScheme,
           _DataType.application,
           filtered[index - 2],
+          isLast: index == filtered.length + 1,
         );
       },
     );
@@ -393,7 +392,7 @@ class _AnnouncementHomePageState extends State<AnnouncementHomePage>
           }
 
           return ListView.builder(
-            padding: const EdgeInsets.all(16),
+            padding: ApAppShell.contentPadding(context),
             itemCount: filtered.length + headerCount,
             itemBuilder: (BuildContext context, int index) {
               if (index < headerCount) {
@@ -413,6 +412,7 @@ class _AnnouncementHomePageState extends State<AnnouncementHomePage>
                 colorScheme,
                 dataType,
                 filtered[index - headerCount],
+                isLast: index == filtered.length + headerCount - 1,
               );
             },
           );
@@ -541,10 +541,11 @@ class _AnnouncementHomePageState extends State<AnnouncementHomePage>
   Widget _buildItemCard(
     ColorScheme colorScheme,
     _DataType dataType,
-    Announcement item,
-  ) {
+    Announcement item, {
+    bool isLast = false,
+  }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: EdgeInsets.only(bottom: isLast ? 0 : 12),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(16),
@@ -872,7 +873,10 @@ class _AnnouncementHomePageState extends State<AnnouncementHomePage>
   Widget _buildLoginContent(ColorScheme colorScheme) {
     return Center(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
+        padding: ApAppShell.contentPadding(
+          context,
+          spacing: const EdgeInsets.fromLTRB(32, 0, 32, 16),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
