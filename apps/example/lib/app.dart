@@ -4,6 +4,7 @@ import 'package:ap_common/ap_common.dart'
     hide AppLocale, AppLocaleUtils, LocaleSettings, TranslationProvider;
 import 'package:ap_common_example/app_navigation.dart';
 import 'package:ap_common_example/config/constants.dart';
+import 'package:ap_common_example/pages/announcement_page.dart';
 import 'package:ap_common_example/utils/app_localizations.dart';
 import 'package:ap_common_example/widgets/share_data_widget.dart';
 import 'package:ap_common_flutter_core/ap_common_flutter_core.dart' as ap_l10n;
@@ -130,7 +131,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
                             AppNavigation.aboutPage(context),
                         AnnouncementHomePage.routerName:
                             (BuildContext context) =>
-                                const AnnouncementHomePage(),
+                                const AnnouncementPage(),
                       },
                       theme: _platformTheme(ApTheme.light(seedColor)),
                       darkTheme: _platformTheme(ApTheme.dark(seedColor)),

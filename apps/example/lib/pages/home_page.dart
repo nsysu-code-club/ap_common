@@ -1,4 +1,6 @@
 import 'package:ap_common/ap_common.dart';
+import 'package:ap_common_example/pages/announcement_page.dart';
+import 'package:ap_common_example/pages/school_info_page.dart';
 import 'package:ap_common_example/res/assets.dart';
 import 'package:ap_common_example/utils/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class HomePage extends StatefulWidget {
     required this.onLoginTap,
     this.enableStartupSideEffects = true,
     this.additionalEntries = const <Widget>[],
+    this.dashboardWidgets = const <Widget>[],
   });
 
   final bool isLogin;
@@ -24,6 +27,7 @@ class HomePage extends StatefulWidget {
   final VoidCallback onLoginTap;
   final bool enableStartupSideEffects;
   final List<Widget> additionalEntries;
+  final List<Widget> dashboardWidgets;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -93,21 +97,41 @@ class _HomePageState extends State<HomePage> {
         displayPicture: widget.displayPicture,
         announcementState: _state,
         announcements: _announcements,
+        announcementExcerpt: (Announcement item) =>
+            carouselExcerpt(item.description),
         courseData: _courseData,
         onAvatarTap: widget.onAvatarTap,
         onLoginTap: widget.onLoginTap,
         onOpenCourse: () => ApAppShell.select(context, 'sch'),
         onOpenAnnouncementReview: () => ApUtils.pushCupertinoStyle(
           context,
-          const AnnouncementHomePage(),
+          const AnnouncementPage(submissionOnly: true),
         ),
         onAnnouncementTap: (Announcement announcement) =>
             ApUtils.pushCupertinoStyle(
           context,
-          AnnouncementContentPage(announcement: announcement),
+          CarouselArticlePage(item: announcement),
         ),
         onRefreshAnnouncements: _getAnnouncements,
         additionalEntries: widget.additionalEntries,
+        dashboardWidgets: widget.dashboardWidgets.isEmpty
+            ? <Widget>[
+                QuickInfoRow(
+                  items: <QuickInfoItem>[
+                    QuickInfoItem(
+                      icon: ApIcon.info,
+                      label: _announcements.length.toString(),
+                      subtitle: context.ap.news,
+                      onTap: () => ApUtils.pushCupertinoStyle(
+                        context,
+                        SchoolInfoPage(),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+              ]
+            : widget.dashboardWidgets,
       ),
     );
   }

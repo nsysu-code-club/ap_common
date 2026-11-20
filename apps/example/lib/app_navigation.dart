@@ -1,5 +1,6 @@
 import 'package:ap_common/ap_common.dart';
 import 'package:ap_common_example/config/constants.dart';
+import 'package:ap_common_example/pages/announcement_page.dart';
 import 'package:ap_common_example/pages/bus_page.dart';
 import 'package:ap_common_example/pages/campus_page.dart';
 import 'package:ap_common_example/pages/diolog_utils_page.dart';
@@ -25,9 +26,11 @@ class AppNavigation extends StatefulWidget {
   const AppNavigation({
     super.key,
     this.enableStartupSideEffects = true,
+    this.dashboardWidgets = const <Widget>[],
   });
 
   final bool enableStartupSideEffects;
+  final List<Widget> dashboardWidgets;
 
   static Widget aboutPage(BuildContext context, {String? assetImage}) {
     return AboutUsPage(
@@ -181,6 +184,7 @@ class _AppNavigationState extends State<AppNavigation> {
             userInfo: _userInfo,
             displayPicture: _displayPicture,
             enableStartupSideEffects: widget.enableStartupSideEffects,
+            dashboardWidgets: widget.dashboardWidgets,
             onAvatarTap: () => _handleAvatarTap(context),
             onLoginTap: _openLogin,
           ),
@@ -223,7 +227,7 @@ class _AppNavigationState extends State<AppNavigation> {
             onAvatarTap: () => _handleAvatarTap(context),
             onOpenSchoolInfo: () => _openPage(context, SchoolInfoPage()),
             onOpenAnnouncementReview: () =>
-                _openPage(context, const AnnouncementHomePage()),
+                _openPage(context, const AnnouncementPage()),
             onOpenSettings: () => _openPage(context, SettingPage()),
             onOpenAbout: () => _openPage(
               context,
